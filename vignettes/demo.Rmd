@@ -1,0 +1,31 @@
+---
+title: "Demonstration of the fishprior R package"
+output: github_document
+vignette: >
+  %\VignetteIndexEntry{Demonstration of the fishprior R package}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+## fishprior
+
+The vignette provides a demonstration on how to use the fishprior package to obtain priors for life-history parameters that will be applicable in the assessment of the status of the population.
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(fishprior)
+```
+
+## Example
+
+The following example provides code used to create the `traits_example` object stored within this package.
+
+```{r example, warning=FALSE, message=FALSE}
+species_list <- c(
+  "Merluccius merluccius",
+  "Gadus chalcogrammus",
+  "Anoplopoma fimbria"
+)
+traits_example <- purrr::map_df(species_list, get_FishLife_traits)
+traits_example
+```

@@ -1,0 +1,39 @@
+Package: fishprior
+Title: Get Priors for Life-History Traits of Fishes
+Version: 0.0.0.9000
+Authors@R: c(
+    person(c("Kelli", "F."), "Johnson", , "kelli.johnson@noaa.gov", role = c("aut", "cre"),
+           comment = c(ORCID = "0000-0002-5149-451X")),
+    person(c("Jennifer", "S."), "Bigman,", role = "aut",
+           comment = c(ORCID = "0000-0001-8070-3061"))
+  )
+Description: This package extracts information the the FishLife R package to
+    inform priors for parameters that are commonly included in assessment models
+    of marine resources. The parameters of interest are life-history parameters
+    such as natural mortality but can also pertain to parameters that are
+    fishery-related but have implausible values due to life-history traits such
+    as selectivity parameters.
+License: GPL (>= 3) | file LICENSE
+URL: https://github.com/noaa-fims/fishprior
+BugReports: https://github.com/noaa-fims/fishprior/issues
+Imports:
+    cli,
+    dplyr,
+    FishLife,
+    tibble,
+    utils
+Suggests:
+    knitr,
+    purrr
+VignetteBuilder:
+    knitr
+Remotes: 
+    github::james-thorson/FishLife@main
+Config/testthat/edition: 3
+Config/testthat/parallel: false
+Encoding: UTF-8
+LazyData: true
+Roxygen: list(markdown = TRUE)
+RoxygenNote: 7.3.2
+Depends: 
+    R (>= 2.10)
