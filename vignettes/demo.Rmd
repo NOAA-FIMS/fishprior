@@ -26,6 +26,6 @@ species_list <- c(
   "Gadus chalcogrammus",
   "Anoplopoma fimbria"
 )
-traits_example <- purrr::map_df(species_list, get_FishLife_traits)
-traits_example
+example <- purrr::map_df(species_list, get_FishLife_traits)
+example
 ```

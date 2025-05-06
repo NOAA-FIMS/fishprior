@@ -46,7 +46,7 @@ get_FishLife_traits <- function(
   species,
   keep_regexp = "age|fecundity|length_|mortality|weight|growth"
 ) {
-  utils::data("FishBase_and_Morphometrics", package = "FishLife")
+  FishBase_and_Morphometrics <- FishLife::FishBase_and_Morphometrics
   data <- FishBase_and_Morphometrics
   if (length(species) > 1) {
     cli::cli_abort(
