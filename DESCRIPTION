@@ -7,15 +7,17 @@ Authors@R: c(
     person(c("Jennifer", "S."), "Bigman,", role = "aut",
            comment = c(ORCID = "0000-0001-8070-3061"))
   )
-Description: This package extracts information the the FishLife R package to
-    inform priors for parameters that are commonly included in assessment models
-    of marine resources. The parameters of interest are life-history parameters
-    such as natural mortality but can also pertain to parameters that are
-    fishery-related but have implausible values due to life-history traits such
-    as selectivity parameters.
+Description: This package extracts information the the FishLife R package
+    to inform priors for parameters that are commonly included in
+    assessment models of marine resources. The parameters of interest are
+    life-history parameters such as natural mortality but can also pertain
+    to parameters that are fishery-related but have implausible values due
+    to life-history traits such as selectivity parameters.
 License: GPL (>= 3) | file LICENSE
 URL: https://github.com/noaa-fims/fishprior
 BugReports: https://github.com/noaa-fims/fishprior/issues
+Depends: 
+    R (>= 2.10)
 Imports:
     cli,
     dplyr,
@@ -37,5 +39,3 @@ Language: en-US
 LazyData: true
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.3.2
-Depends: 
-    R (>= 2.10)

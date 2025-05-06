@@ -43,9 +43,8 @@
 #' utils::write.csv(traits, file = "example_traits_FishLife.csv")
 #' }
 get_FishLife_traits <- function(
-  species,
-  keep_regexp = "age|fecundity|length_|mortality|weight|growth"
-) {
+    species,
+    keep_regexp = "age|fecundity|length_|mortality|weight|growth") {
   utils::data("FishBase_and_Morphometrics", package = "FishLife")
   data <- FishBase_and_Morphometrics
   if (length(species) > 1) {
