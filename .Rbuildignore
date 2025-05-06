@@ -1,3 +1,11 @@
-^fishprior\.Rproj$
+^.*\.Rproj$
 ^\.Rproj\.user$
+^\.github$
+^\.history$
+^codecov\.yml$
+.vscode
 ^data-raw$
+^\.devcontainer$
+CONTRIBUTING.md
+^_pkgdown\.yml$
+^pkgdown$

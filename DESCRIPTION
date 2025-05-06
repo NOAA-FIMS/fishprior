@@ -20,6 +20,7 @@ Imports:
     cli,
     dplyr,
     FishLife,
+    methods,
     tibble,
     utils
 Suggests:

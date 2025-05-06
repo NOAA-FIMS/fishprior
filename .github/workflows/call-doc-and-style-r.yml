@@ -10,6 +10,11 @@ on:
       - main
   workflow_dispatch:
 
+# Cancel active CI runs for a PR before starting another run
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
 jobs:
   call-workflow:
     uses: nmfs-ost/ghactions4r/.github/workflows/doc-and-style-r.yml@main
