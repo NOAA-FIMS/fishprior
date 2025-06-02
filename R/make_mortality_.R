@@ -26,7 +26,6 @@ make_mortality_prior <- function(
   # mortality in normal space but if you take the log of it then the mean of
   # the log-normal prior is log(0.216) = -1.53 and the sd in log space no
   # matter the species is 0.31.
-
 }
 
 #' Make an information prior for natural mortality
