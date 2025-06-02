@@ -24,20 +24,6 @@ follows a lognormal distribution. The mean of the lognormal distribution is
 calculated as 5.40 divided by the maximum age of the fish species. The
 standard deviation of the lognormal distribution is set to 0.31.
 }
-\examples{
-prior_35 <- make_informative_mortality_prior(log(35))
-exp(get_parameters(prior_35)[["mean_log"]])
-traits_example |>
-  dplyr::filter(
-    trait == "log(age_max)"
-  ) |>
-  dplyr::mutate(
-    natural_mortality = purrr::map(
-      mean,
-      make_informative_mortality_prior
-    )
-  )
-}
 \keyword{informative}
 \keyword{mortality}
 \keyword{prior}
