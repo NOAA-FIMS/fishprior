@@ -24,11 +24,5 @@ diffuse prior. The informative prior is based on the Hamel--Cope prior,
 which is based on the maximum age of a fish species. The diffuse prior is
 based on the estimated natural mortality of a fish species.
 }
-\examples{
-# uninformative or diffuse prior
-make_mortality_prior(traits_example, type = "diffuse")
-# informative prior
-make_mortality_prior(traits_example, type = "informative")
-}
 \keyword{mortality}
 \keyword{prior}

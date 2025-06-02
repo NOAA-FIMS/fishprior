@@ -7,8 +7,12 @@
 \alias{get_parameters,prior-method}
 \alias{get_trait}
 \alias{get_trait,prior-method}
+\alias{get_group}
+\alias{get_group,prior-method}
 \alias{get_type}
 \alias{get_type,prior-method}
+\alias{get_data}
+\alias{get_data,prior-method}
 \title{Get information out of the prior class}
 \usage{
 get_distribution(object)
@@ -21,9 +25,17 @@ get_trait(object)
 
 \S4method{get_trait}{prior}(object)
 
+get_group(object)
+
+\S4method{get_group}{prior}(object)
+
 get_type(object)
 
 \S4method{get_type}{prior}(object)
+
+get_data(object)
+
+\S4method{get_data}{prior}(object)
 }
 \arguments{
 \item{object}{An object of class \code{prior}.}

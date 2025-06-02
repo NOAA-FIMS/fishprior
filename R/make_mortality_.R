@@ -16,11 +16,6 @@
 #' A tibble is returned that contains three columns, `"name"` from the input
 #' data frame with the species name, `"parameter"` specifying which parameter
 #' the prior is for, and `"prior"` that contains the S4 class `prior`.
-#' @examples
-#' # uninformative or diffuse prior
-#' make_mortality_prior(traits_example, type = "diffuse")
-#' # informative prior
-#' make_mortality_prior(traits_example, type = "informative")
 make_mortality_prior <- function(
     data,
     type = c("diffuse", "informative")) {
@@ -31,35 +26,7 @@ make_mortality_prior <- function(
   # mortality in normal space but if you take the log of it then the mean of
   # the log-normal prior is log(0.216) = -1.53 and the sd in log space no
   # matter the species is 0.31.
-  if (type == "informative") {
-    out <- dplyr::filter(
-      data,
-      trait == "log(age_max)"
-    ) |>
-      dplyr::mutate(
-        parameter = "natural mortality",
-        prior = purrr::map(
-          mean,
-          make_informative_mortality_prior
-        )
-      )
-  }
-  # Diffuse prior
-  if (type == "diffuse") {
-    out <- dplyr::filter(
-      data,
-      trait == "log(natural_mortality)"
-    ) |>
-      dplyr::mutate(
-        parameter = "natural mortality",
-        prior = purrr::map2(
-          .x = mean,
-          .y = se,
-          .f = make_diffuse_mortality_prior
-        )
-      )
-  }
-  return(dplyr::select(out, -trait, -mean, -se))
+
 }
 
 #' Make an information prior for natural mortality
@@ -80,19 +47,6 @@ make_mortality_prior <- function(
 #' @export
 #' @return
 #' An informative lognormal distribution is returned using the `prior` class.
-#' @examples
-#' prior_35 <- make_informative_mortality_prior(log(35))
-#' exp(get_parameters(prior_35)[["mean_log"]])
-#' traits_example |>
-#'   dplyr::filter(
-#'     trait == "log(age_max)"
-#'   ) |>
-#'   dplyr::mutate(
-#'     natural_mortality = purrr::map(
-#'       mean,
-#'       make_informative_mortality_prior
-#'     )
-#'   )
 make_informative_mortality_prior <- function(log_maximum_age) {
   if (length(log_maximum_age) != 1) {
     cli::cli_abort("{.var log_maximum_age} must be a single value")

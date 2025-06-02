@@ -5,7 +5,9 @@ Authors@R: c(
     person(c("Kelli", "F."), "Johnson", , "kelli.johnson@noaa.gov", role = c("aut", "cre"),
            comment = c(ORCID = "0000-0002-5149-451X")),
     person(c("Jennifer", "S."), "Bigman,", role = "aut",
-           comment = c(ORCID = "0000-0001-8070-3061"))
+           comment = c(ORCID = "0000-0001-8070-3061")),
+    person(c("Eric", "J."), "Ward", role = "aut",
+           comment = c(ORCID = "0000-0002-4359-0296"))
   )
 Description: This package extracts information the the FishLife R package to
     inform priors for parameters that are commonly included in assessment models
@@ -20,13 +22,17 @@ Imports:
     cli,
     dplyr,
     FishLife,
+    ggplot2,
     methods,
+    rlang,
+    stats,
     tibble,
     utils
 Suggests:
     knitr,
     purrr,
-    rmarkdown
+    rmarkdown,
+    testthat (>= 3.0.0)
 VignetteBuilder:
     knitr
 Remotes: 
