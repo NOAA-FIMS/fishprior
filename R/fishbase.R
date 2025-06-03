@@ -180,3 +180,46 @@ summarize_fishbase_traits <- function(fb) {
 
   return(traits[, c("species", "trait", "mean_normal", "sd_normal", "mean", "sd")])
 }
+
+#' Summarize FishBase Trait Data Tables, Traits, and Names
+#'
+#' This function takes no input, but is just useful for identifying the source
+#' of trait info from FishBase and the corresponding table names.
+#' @export
+map_trait_fb <- function() {
+  traits <- tibble::tibble(
+    trait = c(
+      "log(age_max)",
+      "log(fecundity)",
+      "log(growth_coefficient)",
+      "log(length_max)",
+      "log(length_infinity)",
+      "log(length_maturity)",
+      "log(age_maturity)",
+      "log(natural_mortality)"
+    ),
+    fb_table = c(
+      "popchar",      # age_max
+      "fecundity",    # fecundity
+      "popgrowth",    # growth_coefficient (K)
+      "popchar",      # length_max (Lmax)
+      "popgrowth",    # length_infinity (Loo)
+      "maturity",     # length_maturity (Lm)
+      "maturity",     # age_maturity (tm)
+      "popgrowth"     # natural_mortality (M)
+    ),
+    fb_trait = c(
+      "tmax",         # age_max
+      "FecundityMean",# fecundity
+      "K",            # growth_coefficient
+      "Lmax",         # length_max
+      "Loo",          # length_infinity
+      "Lm",           # length_maturity
+      "tm",           # age_maturity
+      "M"             # natural_mortality
+    )
+  )
+  return(traits)
+}
+
+
