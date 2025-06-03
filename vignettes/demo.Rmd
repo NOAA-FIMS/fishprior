@@ -29,3 +29,53 @@ species_list <- c(
 example <- purrr::map_df(species_list, get_FishLife_traits)
 example
 ```
+
+## Constructing a prior using data from FishBase
+
+The `rfishbase` package provides a flexible approach for querying tables in FishBase, and our functions act as wrappers for these calls. As an example of querying data and building custom priors, we will start with a simple example based on Atlantic cod (*Gadus morhua*). The code consists of two steps, first we pull all the data from FishBase, with `get_fishbase_traits()`. This returns a list of tables with traits for the species. These represent different numbers of studies for each trait, and cannot be easily joined together.
+
+```{r querycod, warning=FALSE, message=FALSE}
+cod_traits <- get_fishbase_traits(spec_names = "Gadus morhua")
+```
+
+To see where in FishBase these traits are coming from, you can call the `map_trait_fb()` function, which maps trait names to data tables in FishBase. 
+
+```{r}
+map_trait_fb()
+```
+
+The second step of generating FishBase priors is to use the `summarize_fishbase_traits()` function to summarize data from traits of interest. These are currently hard coded and will be expanded in the future. This function returns a tibble of traits with associated summary statistics
+
+```{r summarycod, warning=FALSE, message=FALSE}
+cod_summary <- summarize_fishbase_traits(cod_traits)
+cod_summary
+```
+
+This approach is simple because it uses all studies in FishBase to summarize data; in practice it may be of interest to only use studies from a specific region. As a demonstration of how to do this, we provide a slightly more complex example. Each of the tables returned by `get_fishbase_traits()` has a `Locality` field, e.g. 
+
+```{r locality, eval=FALSE}
+cod_traits$popgrowth$Locality
+cod_traits$popchar$Locality
+cod_traits$poplw$Locality
+cod_traits$maturity$Locality
+cod_traits$fecundity$Locality
+```
+
+Looking at the locality for growth for example, a handful of studies are from eastern Canada and the northeastern United States. If we wanted to summarize only these studies, we can use some custom filtering (other functions could be used to do this step)
+
+```{r}
+cod_traits$popgrowth <- cod_traits$popgrowth[grepl("Southern Gulf of St\\. Lawrence|Gulf of Maine|Southern New England", cod_traits$popgrowth$Locality), ]
+
+table(cod_traits$popgrowth$Locality)
+```
+
+And then we can pass our filtered dataframe into `summarize_fishbase_traits()`
+
+```{r}
+cod_summary_filtered <- summarize_fishbase_traits(cod_traits)
+cod_summary_filtered
+```
+
+Because we only filtered locality for the growth table, this filtering only affects summaries for parameters coming from this table ("log(growth_coefficient)", "log(length_infinity)").
+
+

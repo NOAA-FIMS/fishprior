@@ -26,6 +26,7 @@ Imports:
     FishLife,
     ggplot2,
     methods,
+    rfishbase,
     rlang,
     stats,
     tibble,
