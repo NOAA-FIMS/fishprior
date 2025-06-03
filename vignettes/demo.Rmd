@@ -51,7 +51,7 @@ cod_summary <- summarize_fishbase_traits(cod_traits)
 cod_summary
 ```
 
-This approach is simple becasue it uses all studies in FishBase to summarize data; in practice it may be of interest to only use studies from a specific region. As a demonstration of how to do this, we provide a slighly more complex example. Each of the tables returned by `get_fishbase_traits()` has a `Locality` field, e.g. 
+This approach is simple because it uses all studies in FishBase to summarize data; in practice it may be of interest to only use studies from a specific region. As a demonstration of how to do this, we provide a slightly more complex example. Each of the tables returned by `get_fishbase_traits()` has a `Locality` field, e.g. 
 
 ```{r locality, eval=FALSE}
 cod_traits$popgrowth$Locality
