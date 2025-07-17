@@ -26,23 +26,23 @@
 #'   "Gadus chalcogrammus",
 #'   "Anoplopoma fimbria"
 #' )
-#' get_FishLife_traits(species_list[1])
+#' get_fishlife_traits(species_list[1])
 #' # Get just natural mortality information
-#' get_FishLife_traits(species_list[1], keep_regexp = "mort")
+#' get_fishlife_traits(species_list[1], keep_regexp = "mort")
 #' # Expect error because the species PacFIN does not exist
 #' \dontrun{
-#' get_FishLife_traits("PacFIN")
+#' get_fishlife_traits("PacFIN")
 #' }
 #' # Expect error because the function is not vectorized
 #' \dontrun{
-#' get_FishLife_traits(species_list[1:2])
+#' get_fishlife_traits(species_list[1:2])
 #' }
 #' # Example of how to get vectorized output and save it
-#' traits <- purrr::map_df(species_list, get_FishLife_traits)
+#' traits <- purrr::map_df(species_list, get_fishlife_traits)
 #' \dontrun{
 #' utils::write.csv(traits, file = "example_traits_FishLife.csv")
 #' }
-get_FishLife_traits <- function(
+get_fishlife_traits <- function(
     species,
     keep_regexp = "age|fecundity|length_|mortality|weight|growth") {
   FishBase_and_Morphometrics <- FishLife::FishBase_and_Morphometrics

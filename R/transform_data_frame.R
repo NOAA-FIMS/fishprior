@@ -1,6 +1,6 @@
 #' Transform log mean and standard error to normal space
 #'
-#' @param data A data frame returned from [get_FishLife_traits()] with the
+#' @param data A data frame returned from [get_fishlife_traits()] with the
 #'   following columns: `name`, `trait`, `mean`, and `se`. The `mean` and
 #'   `se` columns should be in log space.
 #' @return

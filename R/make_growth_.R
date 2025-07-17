@@ -1,5 +1,5 @@
 # growth coefficient K
-# in Von Bertalanffy growth there is a k parameter
+# in von Bertalanffy growth there is a k parameter
 # We have access to log(growth_coefficient)
 
 # pick a distribution, if we choose normal that would be the easiest

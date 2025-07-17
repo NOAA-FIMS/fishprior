@@ -30,6 +30,7 @@ Imports:
     rlang,
     stats,
     tibble,
+    tidyr,
     utils
 Suggests:
     knitr,
