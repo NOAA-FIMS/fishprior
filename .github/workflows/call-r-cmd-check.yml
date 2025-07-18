@@ -13,11 +13,6 @@ on:
       - 'README.md'
   workflow_dispatch:
 
-# Cancel active CI runs for a PR before starting another run
-concurrency:
-  group: ${{ github.workflow }}-${{ github.ref }}
-  cancel-in-progress: true
-
 jobs:
   call-workflow:
     uses: nmfs-ost/ghactions4r/.github/workflows/r-cmd-check.yml@main
