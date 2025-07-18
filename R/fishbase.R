@@ -117,7 +117,7 @@ get_fishbase_traits <- function(spec_names = NULL) {
       Species, SpecCode, StockCode,
       LengthMax, Type, Number, Sex,
       a, b, SEa, SEb, SDa, SDb, Locality, C_Code
-    )
+    ) 
 
   mat <- rfishbase::maturity(species_list = spec_names) |>
     dplyr::select(
