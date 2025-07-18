@@ -95,8 +95,10 @@ get_fishbase_traits <- function(spec_names = NULL) {
     )
 
   char <- rfishbase::popchar(species_list = spec_names) |>
-    dplyr::select(Species, SpecCode, Sex, SourceRef,
-                  Wmax, Lmax, tmax, Locality) |>
+    dplyr::select(
+      Species, SpecCode, Sex, SourceRef,
+      Wmax, Lmax, tmax, Locality
+    ) |>
     dplyr::mutate(
       Lmax = as.numeric(Lmax),
     )
@@ -106,24 +108,29 @@ get_fishbase_traits <- function(spec_names = NULL) {
   #                 Locality, Sex)
 
   lw <- rfishbase::poplw(species_list = spec_names) |>
-    dplyr::select(Species, SpecCode, StockCode,
-                  LengthMax, Type, Number, Sex,
-                  a, b, SEa, SEb, SDa, SDb, Locality)
+    dplyr::select(
+      Species, SpecCode, StockCode,
+      LengthMax, Type, Number, Sex,
+      a, b, SEa, SEb, SDa, SDb, Locality
+    )
 
   mat <- rfishbase::maturity(species_list = spec_names) |>
-    dplyr::select(Species, SpecCode, StockCode, Sex, Locality,
-                  AgeMatRef, tm, Number, SE_tm, SD_tm,
-                  Lm, SD_Lm, SE_Lm
+    dplyr::select(
+      Species, SpecCode, StockCode, Sex, Locality,
+      AgeMatRef, tm, Number, SE_tm, SD_tm,
+      Lm, SD_Lm, SE_Lm
     ) |>
     dplyr::mutate(
       StockCode = as.numeric(StockCode)
     )
 
   fecund <- rfishbase::fecundity(species_list = spec_names) |>
-    dplyr::select(Species, SpecCode, StockCode, Locality,
-                  FecundityMin, FecundityMax, FecundityMean,
-                  FecundityType, Number, a, b, SEa, SEb,
-                  SDa, SDb) |>
+    dplyr::select(
+      Species, SpecCode, StockCode, Locality,
+      FecundityMin, FecundityMax, FecundityMean,
+      FecundityType, Number, a, b, SEa, SEb,
+      SDa, SDb
+    ) |>
     dplyr::mutate(
       SDa = ifelse(is.na(SDa), NA_real_, SDa),
       SDb = ifelse(is.na(SDb), NA_real_, SDb),
@@ -210,20 +217,25 @@ get_fishbase_traits <- function(spec_names = NULL) {
 #' @export
 summarize_fishbase_traits <- function(fb) {
   get_mean_log <- function(x) {
-    if (all(is.na(x))) return(NA)
+    if (all(is.na(x))) {
+      return(NA)
+    }
     mean(log(x[x > 0]), na.rm = TRUE)
   }
 
   get_sd_log <- function(x) {
-    if (all(is.na(x))) return(NA)
-    sd(log(x[x > 0]), na.rm = TRUE) #/ sqrt(sum(!is.na(x[x > 0])))
+    if (all(is.na(x))) {
+      return(NA)
+    }
+    sd(log(x[x > 0]), na.rm = TRUE) # / sqrt(sum(!is.na(x[x > 0])))
   }
 
-  fb |> dplyr::filter(
-    trait %in% c(
-      "Loo", "K", "M", "Lmax", "tmax", "Lm", "tm", "FecundityMean"
-    )
-  ) |>
+  fb |>
+    dplyr::filter(
+      trait %in% c(
+        "Loo", "K", "M", "Lmax", "tmax", "Lm", "tm", "FecundityMean"
+      )
+    ) |>
     dplyr::group_by(Species, trait) |>
     dplyr::summarise(
       mean_normal = mean(value, na.rm = TRUE),

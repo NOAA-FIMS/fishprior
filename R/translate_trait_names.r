@@ -24,6 +24,6 @@ translate_trait_names <- function(trait) {
     trait == "Lm" ~ "log(length_maturity)",
     trait == "tm" ~ "log(age_maturity)",
     trait == "M" ~ "log(natural_mortality)",
-    TRUE ~ trait  # Return the original trait name if no match found
+    TRUE ~ trait # Return the original trait name if no match found
   )
 }
