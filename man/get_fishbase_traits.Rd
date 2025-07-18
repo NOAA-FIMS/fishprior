@@ -31,6 +31,8 @@ length for the growth model, the type of length measurement will be
 listed (e.g., "TL" = total length, "SL" = standard length, etc.). This
 column is important for consistency with \code{\link[rfishbase:length_weight]{rfishbase::poplw()}} or
 \code{\link[rfishbase:popchar]{rfishbase::popchar()}}.}
+\item{C_Code}{Country code in FishBase, usually a string or character}
+\item{E_CODE}{Ecosystem code in FishBase, usually a string or character.}
 \item{SourceRef}{}
 \item{StockCode}{}.
 \item{AgeMatRef}{}.
@@ -40,6 +42,10 @@ column is important for consistency with \code{\link[rfishbase:length_weight]{rf
 available for all traits, and will be \code{NA} if not available.}
 \item{SD}{The standard deviation of the trait value. This information is
 not available for all traits, and will be \code{NA} if not available.}
+\item{country}{The country where the data was collected}
+\item{country_sub}{The sub-country where the data was collected. For the
+USA, this is usually a state for example}
+\item{EcosystemName}{The name of the ecosystem where the data was collected.}
 }
 }
 \description{
@@ -87,5 +93,6 @@ are mature.}
 \item{FecundityMin}{The minimum fecundity observed in the population.}
 \item{FecundityMax}{The maximum fecundity observed in the population.}
 \item{FecundityMean}{The mean fecundity observed in the population.}
+\item{Winfinity}{asymptotic weight, i.e., W∞}
 }
 }

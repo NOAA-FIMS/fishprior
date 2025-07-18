@@ -29,6 +29,8 @@
 #'     listed (e.g., "TL" = total length, "SL" = standard length, etc.). This
 #'     column is important for consistency with [rfishbase::poplw()] or
 #'     [rfishbase::popchar()].}
+#'   \item{C_Code}{Country code in FishBase, usually a string or character} 
+#'   \item{E_CODE}{Ecosystem code in FishBase, usually a string or character.}   
 #'   \item{SourceRef}{}
 #'   \item{StockCode}{}.
 #'   \item{AgeMatRef}{}.
@@ -38,6 +40,10 @@
 #'     available for all traits, and will be `NA` if not available.}
 #'   \item{SD}{The standard deviation of the trait value. This information is
 #'     not available for all traits, and will be `NA` if not available.}
+#'   \item{country}{The country where the data was collected}
+#'   \item{country_sub}{The sub-country where the data was collected. For the 
+#'   USA, this is usually a state for example}
+#'   \item{EcosystemName}{The name of the ecosystem where the data was collected.}
 #' }
 #' @details
 #' There are many traits available in FishBase but this function only returns
@@ -80,6 +86,7 @@
 #'   \item{FecundityMin}{The minimum fecundity observed in the population.}
 #'   \item{FecundityMax}{The maximum fecundity observed in the population.}
 #'   \item{FecundityMean}{The mean fecundity observed in the population.}
+#'   \item{Winfinity}{asymptotic weight, i.e., W∞}
 #' }
 #' @importFrom rfishbase popgrowth popchar poplw maturity fecundity c_code ecosystem
 #' @importFrom dplyr select mutate rename bind_rows rename_with everything group_by left_join matches ungroup summarise filter
@@ -172,7 +179,7 @@ get_fishbase_traits <- function(spec_names = NULL) {
     dplyr::rename_with(
       .f = \(x) paste0(x, "_value"),
       .cols = c(
-        "Loo", "K", "to", "M", "a", "b", "Lm", "tm",
+        "Loo", "K", "to", "M", "a", "b", "Lm", "tm", "Winfinity"
       )
     ) |>
     dplyr::rename_with(
