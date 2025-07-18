@@ -81,7 +81,9 @@
 #'   \item{FecundityMax}{The maximum fecundity observed in the population.}
 #'   \item{FecundityMean}{The mean fecundity observed in the population.}
 #' }
-#'
+#' @importFrom rfishbase popgrowth popchar poplw maturity fecundity c_code ecosystem
+#' @importFrom dplyr select mutate rename bind_rows rename_with everything group_by left_join matches ungroup summarise filter
+#' @importFrom tidyr pivot_longer
 #' @export
 get_fishbase_traits <- function(spec_names = NULL) {
   growth <- rfishbase::popgrowth(species_list = spec_names) |>
@@ -91,13 +93,16 @@ get_fishbase_traits <- function(spec_names = NULL) {
       Loo, SE_Loo, SD_Loo,
       K, SE_K, SD_K,
       to, SE_to, SD_to,
-      M, SE_M, SD_M
-    )
+      M, SE_M, SD_M,
+      Winfinity,
+      C_Code,
+      E_CODE
+    ) 
 
   char <- rfishbase::popchar(species_list = spec_names) |>
     dplyr::select(
       Species, SpecCode, Sex, SourceRef,
-      Wmax, Lmax, tmax, Locality
+      Wmax, Lmax, tmax, Locality, C_Code
     ) |>
     dplyr::mutate(
       Lmax = as.numeric(Lmax),
@@ -111,14 +116,14 @@ get_fishbase_traits <- function(spec_names = NULL) {
     dplyr::select(
       Species, SpecCode, StockCode,
       LengthMax, Type, Number, Sex,
-      a, b, SEa, SEb, SDa, SDb, Locality
+      a, b, SEa, SEb, SDa, SDb, Locality, C_Code
     )
 
   mat <- rfishbase::maturity(species_list = spec_names) |>
     dplyr::select(
       Species, SpecCode, StockCode, Sex, Locality,
       AgeMatRef, tm, Number, SE_tm, SD_tm,
-      Lm, SD_Lm, SE_Lm
+      Lm, SD_Lm, SE_Lm, C_Code, E_CODE
     ) |>
     dplyr::mutate(
       StockCode = as.numeric(StockCode)
@@ -129,7 +134,7 @@ get_fishbase_traits <- function(spec_names = NULL) {
       Species, SpecCode, StockCode, Locality,
       FecundityMin, FecundityMax, FecundityMean,
       FecundityType, Number, a, b, SEa, SEb,
-      SDa, SDb
+      SDa, SDb, C_Code, E_CODE
     ) |>
     dplyr::mutate(
       SDa = ifelse(is.na(SDa), NA_real_, SDa),
@@ -153,7 +158,7 @@ get_fishbase_traits <- function(spec_names = NULL) {
   # ) |>
   #   dplyr::bind_rows()
 
-  list(
+  traits <- list(
     popgrowth = growth,
     popchar = char,
     poplw = lw,
@@ -189,11 +194,34 @@ get_fishbase_traits <- function(spec_names = NULL) {
       .cols = dplyr::everything()
     ) |>
     tidyr::pivot_longer(
-      cols = dplyr::matches("_"),
+      cols = dplyr::matches("(_value$|_SE$|_SD$)"),
       names_to = c("trait", ".value"),
       names_sep = "_",
       values_drop_na = TRUE
     )
+  
+    # add in missing C_Code and E_CODE columns
+    traits_clean <- traits |>
+      dplyr::group_by(Locality) |>  # or 'Locality' if that's the name
+      dplyr::mutate(C_Code = C_Code[!is.na(C_Code)][1]) |>
+      dplyr::ungroup() |>
+      dplyr::group_by(C_Code) |>
+      dplyr::mutate(E_CODE = E_CODE[!is.na(E_CODE)][1]) |>
+      dplyr::ungroup()
+
+    # add in country names and join in
+    country_table <- rfishbase::c_code() |>
+      dplyr::group_by(C_Code) |>
+      dplyr::summarise(country = country[1], 
+                       country_sub = CountrySub[1])
+    traits_clean <- dplyr::left_join(traits_clean, country_table)
+    
+    # add in ecosystem information
+    eco_table <- rfishbase::ecosystem(species_list = spec_names) |>
+      dplyr::group_by(E_CODE) |>
+      dplyr::summarise(EcosystemName = EcosystemName[1])
+    traits_clean <- dplyr::left_join(traits_clean, eco_table)
+    return(traits_clean)
 }
 
 #' Summarize FishBase trait data into log-transformed traits
@@ -213,7 +241,7 @@ get_fishbase_traits <- function(spec_names = NULL) {
 #'   \item{`mean`}{Mean of the log-transformed trait}
 #'   \item{`sd`}{Approximate standard deviation of the log-transformed trait.}
 #' }
-#'
+#' @importFrom dplyr filter group_by summarise mutate
 #' @export
 summarize_fishbase_traits <- function(fb) {
   get_mean_log <- function(x) {
