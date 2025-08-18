@@ -30,13 +30,13 @@ Imports:
     rlang,
     stats,
     tibble,
-    tidyr,
-    utils
+    tidyr
 Suggests:
     knitr,
     purrr,
     rmarkdown,
-    testthat (>= 3.0.0)
+    testthat (>= 3.0.0),
+    utils
 VignetteBuilder:
     knitr
 Remotes: 

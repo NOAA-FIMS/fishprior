@@ -15,7 +15,8 @@ A tibble that is grouped by Species with the following columns:
 \item{\code{Species}}{Species name.}
 \item{\code{trait}}{Name of the trait (e.g., \code{log(length_infinity)}).}
 \item{\code{mean_normal}}{Mean of the trait in normal space}
-\item{\code{sd_normal}}{Approximate standard deviation of the trait in normal space.}
+\item{\code{sd_normal}}{Approximate standard deviation of the trait in normal
+space.}
 \item{\code{mean}}{Mean of the log-transformed trait}
 \item{\code{sd}}{Approximate standard deviation of the log-transformed trait.}
 }

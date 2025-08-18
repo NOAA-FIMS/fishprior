@@ -31,8 +31,9 @@ length for the growth model, the type of length measurement will be
 listed (e.g., "TL" = total length, "SL" = standard length, etc.). This
 column is important for consistency with \code{\link[rfishbase:length_weight]{rfishbase::poplw()}} or
 \code{\link[rfishbase:popchar]{rfishbase::popchar()}}.}
-\item{C_Code}{Country code in FishBase, usually a string or character}
-\item{E_CODE}{Ecosystem code in FishBase, usually a string or character.}
+\item{C_Code}{Country code in FishBase, which is a string because there
+can be letters attached to the numeric values.}
+\item{E_CODE}{Ecosystem code in FishBase as numeric value.}
 \item{SourceRef}{}
 \item{StockCode}{}.
 \item{AgeMatRef}{}.
@@ -42,10 +43,9 @@ column is important for consistency with \code{\link[rfishbase:length_weight]{rf
 available for all traits, and will be \code{NA} if not available.}
 \item{SD}{The standard deviation of the trait value. This information is
 not available for all traits, and will be \code{NA} if not available.}
-\item{country}{The country where the data was collected}
-\item{country_sub}{The sub-country where the data was collected. For the
-USA, this is usually a state for example}
-\item{EcosystemName}{The name of the ecosystem where the data was collected.}
+\item{country}{The country where the data was collected.}
+\item{EcosystemName}{The name of the ecosystem where the data was
+collected.}
 }
 }
 \description{
@@ -59,11 +59,11 @@ those that were relevant for assessment and life-history modeling. Should
 you wish that more traits be included, please open an \href{https://github.com/NOAA-FIMS/fishprior/issues}{issue on GitHub}. Below is a list of the
 traits that are available in the \code{trait} column:
 \describe{
-\item{Loo}{Asymptotic length (L∞) in the von Bertalanffy Growth Function
+\item{Loo}{Asymptotic length (L8) in the von Bertalanffy Growth Function
 (typically in cm).}
 \item{K}{Growth coefficient (K) from the von Bertalanffy model (in
 1/year).}
-\item{to}{Theoretical age at zero length (t₀) from the von Bertalanffy
+\item{to}{Theoretical age at zero length (t0) from the von Bertalanffy
 model (in years).}
 \item{M}{Natural mortality rate (M) estimated from the growth model or
 accompanying source.}
@@ -93,6 +93,6 @@ are mature.}
 \item{FecundityMin}{The minimum fecundity observed in the population.}
 \item{FecundityMax}{The maximum fecundity observed in the population.}
 \item{FecundityMean}{The mean fecundity observed in the population.}
-\item{Winfinity}{asymptotic weight, i.e., W∞}
+\item{Winfinity}{The asymptotic weight, i.e., W8.}
 }
 }

@@ -18,9 +18,9 @@ test_that("get_fishbase_traits() works with correct inputs", {
     object = colnames(traits),
     expected = c("rfishbase", "Species", "SpecCode", "Sex", "PopGrowthRef",
                  "DataSourceRef","Locality", "YearStart", "YearEnd", "Number",
-                 "Type", "Winfinity", "C_Code", "E_CODE", "SourceRef",
+                 "Type", "C_Code", "E_CODE", "SourceRef",
                  "StockCode", "AgeMatRef", "trait", "value", "SE",
-                 "SD", "country", "country_sub", "EcosystemName")
+                 "SD", "country", "EcosystemName")
   )
   
   #' @description Test that get_fishbase_traits(x) returns lots of rows

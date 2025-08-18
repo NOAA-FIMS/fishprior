@@ -29,8 +29,9 @@
 #'     listed (e.g., "TL" = total length, "SL" = standard length, etc.). This
 #'     column is important for consistency with [rfishbase::poplw()] or
 #'     [rfishbase::popchar()].}
-#'   \item{C_Code}{Country code in FishBase, usually a string or character} 
-#'   \item{E_CODE}{Ecosystem code in FishBase, usually a string or character.}   
+#'   \item{C_Code}{Country code in FishBase, which is a string because there
+#'     can be letters attached to the numeric values.}
+#'   \item{E_CODE}{Ecosystem code in FishBase as numeric value.}
 #'   \item{SourceRef}{}
 #'   \item{StockCode}{}.
 #'   \item{AgeMatRef}{}.
@@ -40,10 +41,9 @@
 #'     available for all traits, and will be `NA` if not available.}
 #'   \item{SD}{The standard deviation of the trait value. This information is
 #'     not available for all traits, and will be `NA` if not available.}
-#'   \item{country}{The country where the data was collected}
-#'   \item{country_sub}{The sub-country where the data was collected. For the 
-#'   USA, this is usually a state for example}
-#'   \item{EcosystemName}{The name of the ecosystem where the data was collected.}
+#'   \item{country}{The country where the data was collected.}
+#'   \item{EcosystemName}{The name of the ecosystem where the data was
+#'     collected.}
 #' }
 #' @details
 #' There are many traits available in FishBase but this function only returns
@@ -86,11 +86,8 @@
 #'   \item{FecundityMin}{The minimum fecundity observed in the population.}
 #'   \item{FecundityMax}{The maximum fecundity observed in the population.}
 #'   \item{FecundityMean}{The mean fecundity observed in the population.}
-#'   \item{Winfinity}{asymptotic weight, i.e., W∞}
+#'   \item{Winfinity}{The asymptotic weight, i.e., W∞.}
 #' }
-#' @importFrom rfishbase popgrowth popchar poplw maturity fecundity c_code ecosystem
-#' @importFrom dplyr select mutate rename bind_rows rename_with everything group_by left_join matches ungroup summarise filter
-#' @importFrom tidyr pivot_longer
 #' @export
 get_fishbase_traits <- function(spec_names = NULL) {
   growth <- rfishbase::popgrowth(species_list = spec_names) |>
@@ -104,7 +101,11 @@ get_fishbase_traits <- function(spec_names = NULL) {
       Winfinity,
       C_Code,
       E_CODE
-    ) 
+    ) |>
+    dplyr::mutate(
+      C_Code = as.character(C_Code),
+      E_CODE = as.numeric(E_CODE)
+    )
 
   char <- rfishbase::popchar(species_list = spec_names) |>
     dplyr::select(
@@ -113,6 +114,7 @@ get_fishbase_traits <- function(spec_names = NULL) {
     ) |>
     dplyr::mutate(
       Lmax = as.numeric(Lmax),
+      C_Code = as.character(C_Code),
     )
 
   # lf <- rfishbase::poplf(species_list = spec_names) |>
@@ -124,7 +126,10 @@ get_fishbase_traits <- function(spec_names = NULL) {
       Species, SpecCode, StockCode,
       LengthMax, Type, Number, Sex,
       a, b, SEa, SEb, SDa, SDb, Locality, C_Code
-    ) 
+    ) |>
+    dplyr::mutate(
+      C_Code = as.character(C_Code)
+    )
 
   mat <- rfishbase::maturity(species_list = spec_names) |>
     dplyr::select(
@@ -133,7 +138,9 @@ get_fishbase_traits <- function(spec_names = NULL) {
       Lm, SD_Lm, SE_Lm, C_Code, E_CODE
     ) |>
     dplyr::mutate(
-      StockCode = as.numeric(StockCode)
+      StockCode = as.numeric(StockCode),
+      C_Code = as.character(C_Code),
+      E_CODE = as.numeric(E_CODE)
     )
 
   fecund <- rfishbase::fecundity(species_list = spec_names) |>
@@ -148,7 +155,9 @@ get_fishbase_traits <- function(spec_names = NULL) {
       SDb = ifelse(is.na(SDb), NA_real_, SDb),
       FecundityMin = as.numeric(FecundityMin),
       FecundityMax = as.numeric(FecundityMax),
-      FecundityMean = as.numeric(FecundityMean)
+      FecundityMean = as.numeric(FecundityMean),
+      C_Code = as.character(C_Code),
+      E_CODE = as.numeric(E_CODE)
     ) |>
     dplyr::rename(
       Type = FecundityType
@@ -206,30 +215,32 @@ get_fishbase_traits <- function(spec_names = NULL) {
       names_sep = "_",
       values_drop_na = TRUE
     )
-  
-    # add in missing C_Code and E_CODE columns
-    traits_clean <- traits |>
-      dplyr::group_by(Locality) |>  # or 'Locality' if that's the name
-      dplyr::mutate(C_Code = C_Code[!is.na(C_Code)][1]) |>
-      dplyr::ungroup() |>
-      dplyr::group_by(C_Code) |>
-      dplyr::mutate(E_CODE = E_CODE[!is.na(E_CODE)][1]) |>
-      dplyr::ungroup()
 
-    # add in country names and join in
-    country_table <- rfishbase::c_code() |>
-      dplyr::group_by(C_Code) |>
-      dplyr::summarise(country = country[1], 
-                       country_sub = CountrySub[1])
-    traits_clean <- dplyr::left_join(traits_clean, country_table)
-    
-    # add in ecosystem information
-    eco_table <- rfishbase::ecosystem(species_list = spec_names) |>
-      dplyr::group_by(E_CODE) |>
-      dplyr::summarise(EcosystemName = EcosystemName[1])
-    traits_clean <- dplyr::left_join(traits_clean, eco_table)
-    return(traits_clean)
+  # For a given Locality, sometimes there are missing C_Code and E_CODE
+  # entries, these can be filled in using the first non-NA value, if all
+  # are NA then it will use NA to fill it in.
+  # Next join with country and ecosystem names because C_Code and E_CODE
+  # are not very informative.
+  traits |>
+    dplyr::group_by(Locality) |>  # or 'Locality' if that's the name
+    dplyr::mutate(C_Code = C_Code[!is.na(C_Code)][1]) |>
+    dplyr::ungroup() |>
+    dplyr::group_by(C_Code) |>
+    dplyr::mutate(E_CODE = E_CODE[!is.na(E_CODE)][1]) |>
+    dplyr::ungroup() |>
+    as.data.frame() |>
+    dplyr::left_join(
+      get_fishbase_country_names(),
+      by = dplyr::join_by(C_Code)
+    ) |>
+    dplyr::left_join(
+      get_fishbase_ecosystem_names(spec_names),
+      by = dplyr::join_by(E_CODE)
+    ) |>
+    dplyr::tibble()
+
 }
+
 
 #' Summarize FishBase trait data into log-transformed traits
 #'
@@ -244,11 +255,11 @@ get_fishbase_traits <- function(spec_names = NULL) {
 #'   \item{`Species`}{Species name.}
 #'   \item{`trait`}{Name of the trait (e.g., `log(length_infinity)`).}
 #'   \item{`mean_normal`}{Mean of the trait in normal space}
-#'   \item{`sd_normal`}{Approximate standard deviation of the trait in normal space.}
+#'   \item{`sd_normal`}{Approximate standard deviation of the trait in normal
+#'     space.}
 #'   \item{`mean`}{Mean of the log-transformed trait}
 #'   \item{`sd`}{Approximate standard deviation of the log-transformed trait.}
 #' }
-#' @importFrom dplyr filter group_by summarise mutate
 #' @export
 summarize_fishbase_traits <- function(fb) {
   get_mean_log <- function(x) {
@@ -281,4 +292,31 @@ summarize_fishbase_traits <- function(fb) {
     dplyr::mutate(
       trait = translate_trait_names(trait)
     )
+}
+
+#' Retrieve FishBase country or ecosystem names
+#'
+#' @param species A character vector of species names. This argument is not
+#'   required, where the default is `NULL` and will return all ecosystems for
+#'   all species. It is much faster to provide a species vector.
+#' @return
+#' A two-column tibble is returned with the first column being the code
+#' (either `C_Code` for country or `E_CODE` for ecosystem) and the second column
+#' being the name of the country or ecosystem as a string.
+#' @noRd
+get_fishbase_country_names <- function() {
+  rfishbase::c_code() |>
+    dplyr::distinct(C_Code, country) |>
+    dplyr::mutate(
+      C_Code = as.character(C_Code)
+    ) |>
+    as.data.frame()
+}
+get_fishbase_ecosystem_names <- function(species = NULL) {
+  rfishbase::ecosystem(species = species) |>
+    dplyr::distinct(E_CODE, EcosystemName) |>
+    dplyr::mutate(
+      E_CODE = as.integer(E_CODE)
+    ) |>
+    as.data.frame()
 }
