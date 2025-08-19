@@ -59,11 +59,11 @@ those that were relevant for assessment and life-history modeling. Should
 you wish that more traits be included, please open an \href{https://github.com/NOAA-FIMS/fishprior/issues}{issue on GitHub}. Below is a list of the
 traits that are available in the \code{trait} column:
 \describe{
-\item{Loo}{Asymptotic length (L8) in the von Bertalanffy Growth Function
+\item{Loo}{Asymptotic length (L∞) in the von Bertalanffy Growth Function
 (typically in cm).}
 \item{K}{Growth coefficient (K) from the von Bertalanffy model (in
 1/year).}
-\item{to}{Theoretical age at zero length (t0) from the von Bertalanffy
+\item{to}{Theoretical age at zero length (t₀) from the von Bertalanffy
 model (in years).}
 \item{M}{Natural mortality rate (M) estimated from the growth model or
 accompanying source.}
@@ -93,6 +93,6 @@ are mature.}
 \item{FecundityMin}{The minimum fecundity observed in the population.}
 \item{FecundityMax}{The maximum fecundity observed in the population.}
 \item{FecundityMean}{The mean fecundity observed in the population.}
-\item{Winfinity}{The asymptotic weight, i.e., W8.}
+\item{Winfinity}{The asymptotic weight, i.e., W∞.}
 }
 }
