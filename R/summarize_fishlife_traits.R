@@ -1,13 +1,12 @@
-#' Get traits for a species from the FishLife package
+#' Summarize FishLife trait data into log-transformed traits
 #'
-#' Get life-history traits for a given species from the FishLife package. Look
-#' at the example for how to get data on multiple species at once. This function
-#' depends on the `FishBase_and_Morphometrics` data object from the FishLife
-#' package.
+#' FishLife already summarizes these traits for us so this function is just
+#' returning a table for a given species from the FishLife package. This
+#' function depends on the `FishBase_and_Morphometrics` data object from the
+#' FishLife package.
 #'
-#' @param species A string specifying the scientific name for the species of
-#'   interest. This function will only accept a single string. See the examples
-#'   for how to get data on multiple species at once.
+#' @param species A vector of strings specifying the scientific names for the
+#'   species of interest.
 #' @param keep_regexp A string specifying a regular expression to search for.
 #'   The default searches for multiple words using `"|"` as a separator. This
 #'   default will return nine traits related to life history.
@@ -20,39 +19,45 @@
 #' values are in natural log space. The third and fourth columns, `mean` and
 #' `se`, store the mean and the standard error of the mean for the given trait.
 #' @export
+#' @seealso
+#' * [summarize_fishbase_traits()]
+#'
 #' @examples
 #' species_list <- c(
 #'   "Merluccius merluccius",
 #'   "Gadus chalcogrammus",
 #'   "Anoplopoma fimbria"
 #' )
-#' get_fishlife_traits(species_list[1])
+#' summarize_fishlife_traits(species_list)
 #' # Get just natural mortality information
-#' get_fishlife_traits(species_list[1], keep_regexp = "mort")
+#' summarize_fishlife_traits(species_list, keep_regexp = "mort")
 #' # Expect error because the species PacFIN does not exist
 #' \dontrun{
-#' get_fishlife_traits("PacFIN")
+#' summarize_fishlife_traits("PacFIN")
 #' }
-#' # Expect error because the function is not vectorized
-#' \dontrun{
-#' get_fishlife_traits(species_list[1:2])
-#' }
-#' # Example of how to get vectorized output and save it
-#' traits <- purrr::map_df(species_list, get_fishlife_traits)
-#' \dontrun{
-#' utils::write.csv(traits, file = "example_traits_FishLife.csv")
-#' }
-get_fishlife_traits <- function(
+summarize_fishlife_traits <- function(
     species,
     keep_regexp = "age|fecundity|length_|mortality|weight|growth") {
   FishBase_and_Morphometrics <- FishLife::FishBase_and_Morphometrics
   data <- FishBase_and_Morphometrics
-  if (length(species) > 1) {
-    cli::cli_abort(
-      message = "{.var species} can only have a length of 1 instead of
-                {length(species)}."
-    )
-  }
+
+  purrr::map_df(
+    species_list,
+    summarize_fishlife_trait,
+    data = data,
+    keep_regexp = keep_regexp
+  )
+}
+
+#' Get the FishLife traits for a single species
+#'
+#' @inheritParams summarize_fishlife_traits
+#' @param data A data frame returned by [FishLife::FishBase_and_Morphometrics].
+#' @noRd
+summarize_fishlife_trait <- function(species, keep_regexp, data) {
+  # TODO: Move this check to the top of summarize_fishlife_traits so that the
+  #       function will fail fast and informative for all species that are
+  #       missing rather than over and over again if a vector is provided.
   position <- match(species, data[["tree"]][["tip.label"]])
   if (length(position) == 0 | is.na(position)) {
     cli::cli_abort(
@@ -66,14 +71,14 @@ get_fishlife_traits <- function(
   trait_mean <- data[["beta_gv"]][position, ]
   trait_se <- sqrt(diag(data[["Cov_gvv"]][position, , ]))
   trait_data <- tibble::tibble(
-    name = species,
+    Species = species,
     trait = names(trait_mean),
     mean = trait_mean,
     se = trait_se
-  )
-  out_data_frame <- dplyr::filter(
-    trait_data,
-    grepl(keep_regexp, trait)
-  )
-  return(out_data_frame)
+  ) |>
+    dplyr::filter(
+      grepl(keep_regexp, trait)
+    ) |>
+    transform_data_frame()
+  # TODO: get mean_normal and sd_normal
 }

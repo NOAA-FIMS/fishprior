@@ -19,7 +19,7 @@ License: GPL (>= 3) | file LICENSE
 URL: https://github.com/noaa-fims/fishprior
 BugReports: https://github.com/noaa-fims/fishprior/issues
 Depends: 
-    R (>= 2.10)
+    R (>= 3.5)
 Imports:
     cli,
     dplyr,

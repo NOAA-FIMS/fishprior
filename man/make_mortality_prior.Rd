@@ -7,7 +7,7 @@
 make_mortality_prior(data, type = c("diffuse", "informative"))
 }
 \arguments{
-\item{data}{A data frame returned by \code{\link[=get_fishlife_traits]{get_fishlife_traits()}} containing
+\item{data}{A data frame returned by \code{\link[=summarize_fishlife_traits]{summarize_fishlife_traits()}} containing
 life-history information for at least one fish species.}
 
 \item{type}{A character string indicating the type of prior to be created.

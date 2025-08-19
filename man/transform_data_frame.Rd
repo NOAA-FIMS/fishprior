@@ -7,9 +7,8 @@
 transform_data_frame(data)
 }
 \arguments{
-\item{data}{A data frame returned from \code{\link[=get_fishlife_traits]{get_fishlife_traits()}} with the
-following columns: \code{name}, \code{trait}, \code{mean}, and \code{se}. The \code{mean} and
-\code{se} columns should be in log space.}
+\item{data}{A data frame with the following columns: \code{Species}, \code{trait},
+\code{mean}, and \code{se}. The \code{mean} and \code{se} columns should be in log space.}
 }
 \value{
 The original data frame is returned with two additional columns,

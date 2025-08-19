@@ -5,7 +5,7 @@
 #' which is based on the maximum age of a fish species. The diffuse prior is
 #' based on the estimated natural mortality of a fish species.
 #'
-#' @param data A data frame returned by [get_fishlife_traits()] containing
+#' @param data A data frame returned by [summarize_fishlife_traits()] containing
 #'   life-history information for at least one fish species.
 #' @param type A character string indicating the type of prior to be created.
 #'   Either `"diffuse"` or `"informative"`. The default is `"diffuse"`.

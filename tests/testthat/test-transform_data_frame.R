@@ -15,7 +15,7 @@ test_that("transform_data_frame() works with correct inputs", {
   #' names.
   expect_equal(
     object = colnames(transformed),
-    expected = c("name", "trait", "mean", "se", "mean_normal", "sd_normal")
+    expected = c("Species", "trait", "mean_normal", "sd_normal", "mean", "se")
   )
 })
 
