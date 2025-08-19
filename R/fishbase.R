@@ -222,7 +222,7 @@ get_fishbase_traits <- function(spec_names = NULL) {
   # Next join with country and ecosystem names because C_Code and E_CODE
   # are not very informative.
   traits |>
-    dplyr::group_by(Locality) |>  # or 'Locality' if that's the name
+    dplyr::group_by(Locality) |> # or 'Locality' if that's the name
     dplyr::mutate(C_Code = C_Code[!is.na(C_Code)][1]) |>
     dplyr::ungroup() |>
     dplyr::group_by(C_Code) |>
@@ -238,7 +238,6 @@ get_fishbase_traits <- function(spec_names = NULL) {
       by = dplyr::join_by(E_CODE)
     ) |>
     dplyr::tibble()
-
 }
 
 
