@@ -1,8 +1,10 @@
 #' Retrieve FishBase life-history trait data for species
 #'
 #' Queries FishBase via the \pkg{rfishbase} package and returns raw data tables
-#' containing life-history traits relevant for meta-analysis or prior construction.
-#' @param spec_names A character vector of species names (e.g., "Gadus morhua").
+#' containing life-history traits relevant for meta-analysis or prior
+#' construction.
+#' @param spec_names A character vector of species names (e.g.,
+#'   `"Gadus morhua"`).
 #' @importFrom rlang .data
 #' @return A tibble with metadata and trait information.
 #' @export
@@ -73,7 +75,7 @@ get_fishbase_traits <- function(spec_names = NULL) {
       C_Code = as.character(.data$C_Code),
       E_CODE = as.numeric(.data$E_CODE)
     ) |>
-    dplyr::rename(Type = FecundityType)
+    dplyr::rename(Type = "FecundityType")
 
   traits <- list(
     popgrowth = growth,
@@ -91,11 +93,19 @@ get_fishbase_traits <- function(spec_names = NULL) {
       .cols = c("Loo", "K", "to", "M", "a", "b", "Lm", "tm", "Winfinity")
     ) |>
     dplyr::rename_with(
-      .fn = \(x) gsub(pattern = "(.+)([mM][aei][a-zA-Z]{1,2}$)", replacement = "\\1\\2_value", x = x),
+      .fn = \(x) gsub(
+        pattern = "(.+)([mM][aei][a-zA-Z]{1,2}$)",
+        replacement = "\\1\\2_value",
+        x = x
+      ),
       .cols = dplyr::everything()
     ) |>
     dplyr::rename_with(
-      .fn = \(x) gsub(pattern = "^(S[D|E])_{0,1}(.+)", replacement = "\\2_\\1", x = x),
+      .fn = \(x) gsub(
+        pattern = "^(S[D|E])_{0,1}(.+)",
+        replacement = "\\2_\\1",
+        x = x
+      ),
       .cols = dplyr::everything()
     ) |>
     tidyr::pivot_longer(
@@ -150,7 +160,11 @@ summarize_fishbase_traits <- function(fb) {
   }
 
   fb |>
-    dplyr::filter(.data$trait %in% c("Loo", "K", "M", "Lmax", "tmax", "Lm", "tm", "FecundityMean")) |>
+    dplyr::filter(
+      .data$trait %in% c(
+        "Loo", "K", "M", "Lmax", "tmax", "Lm", "tm", "FecundityMean"
+      )
+    ) |>
     dplyr::group_by(.data$Species, .data$trait) |>
     dplyr::summarise(
       mean_normal = mean(.data$value, na.rm = TRUE),

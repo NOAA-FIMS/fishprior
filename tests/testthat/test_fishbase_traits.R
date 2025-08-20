@@ -28,7 +28,8 @@ test_that("get_fishbase_traits() works with correct inputs", {
   #' @description Test that get_fishbase_traits(x) returns lots of rows
   expect_gt(nrow(traits), 600)
 
-  #' @description Test that get_fishbase_traits(x) returns data from correct tables
+  #' @description Test that get_fishbase_traits(x) returns data from correct
+  #' tables.
   expect_equal(unique(traits$rfishbase), expected = c(
     "popgrowth",
     "popchar",
