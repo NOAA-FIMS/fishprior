@@ -32,7 +32,8 @@ get_fishbase_traits <- function(spec_names = NULL) {
     ) |>
     dplyr::mutate(
       Lmax = as.numeric(.data$Lmax),
-      C_Code = as.character(.data$C_Code)
+      C_Code = as.character(.data$C_Code),
+      Number = 1
     )
 
   lw <- rfishbase::poplw(species_list = spec_names) |>
@@ -40,7 +41,7 @@ get_fishbase_traits <- function(spec_names = NULL) {
       "Species", "SpecCode", "StockCode",
       "LengthMax", "Type", "Number", "Sex",
       "a", "b", "SEa", "SEb", "SDa", "SDb",
-      "Locality", "C_Code"
+      "Locality", "C_Code", "Number"
     ) |>
     dplyr::mutate(
       C_Code = as.character(.data$C_Code)
