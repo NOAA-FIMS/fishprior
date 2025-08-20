@@ -7,12 +7,14 @@
 get_fishbase_traits(spec_names = NULL)
 }
 \arguments{
-\item{spec_names}{A character vector of species names (e.g., "Gadus morhua").}
+\item{spec_names}{A character vector of species names (e.g.,
+\code{"Gadus morhua"}).}
 }
 \value{
 A tibble with metadata and trait information.
 }
 \description{
 Queries FishBase via the \pkg{rfishbase} package and returns raw data tables
-containing life-history traits relevant for meta-analysis or prior construction.
+containing life-history traits relevant for meta-analysis or prior
+construction.
 }

@@ -70,7 +70,7 @@ methods::setMethod(
   f = "get_distribution",
   signature = "prior",
   definition = function(object) {
-    return(object@distribution)
+    object@distribution
   }
 )
 
@@ -89,7 +89,7 @@ methods::setMethod(
   f = "get_parameters",
   signature = "prior",
   definition = function(object) {
-    return(object@parameters)
+    object@parameters
   }
 )
 
@@ -108,7 +108,7 @@ methods::setMethod(
   f = "get_trait",
   signature = "prior",
   definition = function(object) {
-    return(object@trait)
+    object@trait
   }
 )
 
@@ -127,7 +127,7 @@ methods::setMethod(
   f = "get_group",
   signature = "prior",
   definition = function(object) {
-    return(object@group)
+    object@group
   }
 )
 
@@ -146,7 +146,7 @@ methods::setMethod(
   f = "get_type",
   signature = "prior",
   definition = function(object) {
-    return(object@type)
+    object@type
   }
 )
 
@@ -165,7 +165,7 @@ methods::setMethod(
   f = "get_data",
   signature = "prior",
   definition = function(object) {
-    return(object@data)
+    object@data
   }
 )
 
