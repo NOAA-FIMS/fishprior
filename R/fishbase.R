@@ -4,7 +4,6 @@
 #' containing life-history traits relevant for meta-analysis or prior construction.
 #' @param spec_names A character vector of species names (e.g., "Gadus morhua").
 #' @importFrom rlang .data
-#' @importFrom stats na.omit
 #' @return A tibble with metadata and trait information.
 #' @export
 get_fishbase_traits <- function(spec_names = NULL) {
@@ -107,12 +106,12 @@ get_fishbase_traits <- function(spec_names = NULL) {
     ) |>
     dplyr::group_by(.data$Locality) |>
     dplyr::mutate(
-      C_Code = dplyr::first(na.omit(.data$C_Code))
+      C_Code = dplyr::first(stats::na.omit(.data$C_Code))
     ) |>
     dplyr::ungroup() |>
     dplyr::group_by(.data$C_Code) |>
     dplyr::mutate(
-      E_CODE = dplyr::first(na.omit(.data$E_CODE))
+      E_CODE = dplyr::first(stats::na.omit(.data$E_CODE))
     ) |>
     dplyr::ungroup() |>
     dplyr::left_join(
@@ -133,7 +132,6 @@ get_fishbase_traits <- function(spec_names = NULL) {
 #'
 #' @param fb A tibble returned by [get_fishbase_traits()].
 #' @importFrom rlang .data
-#' @importFrom stats sd
 #' @return A tibble grouped by Species and trait with log-transformed stats.
 #' @export
 summarize_fishbase_traits <- function(fb) {
@@ -144,7 +142,7 @@ summarize_fishbase_traits <- function(fb) {
   
   get_sd_log <- function(x) {
     if (all(is.na(x))) return(NA)
-    sd(log(x[x > 0]), na.rm = TRUE)
+    stats::sd(log(x[x > 0]), na.rm = TRUE)
   }
   
   fb |>
@@ -152,7 +150,7 @@ summarize_fishbase_traits <- function(fb) {
     dplyr::group_by(.data$Species, .data$trait) |>
     dplyr::summarise(
       mean_normal = mean(.data$value, na.rm = TRUE),
-      sd_normal = sd(.data$value, na.rm = TRUE),
+      sd_normal = stats::sd(.data$value, na.rm = TRUE),
       mean = get_mean_log(.data$value),
       sd = get_sd_log(.data$value),
       .groups = "drop"
