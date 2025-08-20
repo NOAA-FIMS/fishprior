@@ -32,8 +32,7 @@ make_growth_coefficient_prior <- function(
       {.val type = 'informative'}"
     ))
   }
-  x <- transform_data_frame(data) |>
-    dplyr::filter(trait == "log(growth_coefficient)")
+  x <- dplyr::filter(data, trait == "log(growth_coefficient)")
 
   parameters <- dplyr::case_when(
     type == "informative" ~ list(

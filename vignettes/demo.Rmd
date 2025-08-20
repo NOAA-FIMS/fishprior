@@ -18,28 +18,22 @@ library(fishprior)
 
 ## Data
 
-Data for priors can be obtained from either FishBase using `get_fishbase_traits()` and `summarize_fishbase_traits()`, which is a wrapper around the `rfishbase` package, or using `summarize_fishlife_traits()`, which queries the results from the FishLife analysis. Both functions return long tibbles that can be used in downstream functions. 
+Data for priors can be obtained from either FishBase using `get_fishbase_traits()` and `summarize_fishbase_traits()`, which is a wrapper around the `rfishbase` package.
 
-The following example provides code used to create the `traits_example` object stored within this package.
 
-```{r example-fishlife, warning=FALSE, message=FALSE}
+This example provides code used to query FishBase for traits for three species. The `rfishbase` package provides a flexible approach for querying tables in FishBase, and our functions act as wrappers for these calls.
+
+```{r example-fishbase, warning=FALSE, message=FALSE}
 species_list <- c(
   "Merluccius merluccius",
   "Gadus chalcogrammus",
   "Anoplopoma fimbria"
 )
-example_life <- summarize_fishlife_traits(species_list)
-example_life
-```
-
-This second example provides code used to query FishBase for traits for the same three species used in the previous example. The `rfishbase` package provides a flexible approach for querying tables in FishBase, and our functions act as wrappers for these calls. 
-
-```{r example-fishbase, warning=FALSE, message=FALSE}
 example_base_raw <- get_fishbase_traits(spec_names = species_list)
 example_base_raw
 ```
 
-This data can be summarized to provide output similar to what is returned from `summarize_fishlife_traits()` using `summarize_fishbase_traits()`. Only a handful of traits are currently summarized but more can be provided in the future should it be desired. Feel free to fill out a [GitHub Issue](https://github.com/NOAA-FIMS/fishprior) if you would like to see more traits summarized.
+This data can be summarized to provide output similar to what is returned from FishLife. Only a handful of traits are currently summarized but more can be provided in the future should it be desired. Feel free to fill out a [GitHub Issue](https://github.com/NOAA-FIMS/fishprior) if you would like to see more traits summarized.
 
 ```{r summarize-example, warning=FALSE, message=FALSE}
 example_base <- summarize_fishbase_traits(example_base_raw)

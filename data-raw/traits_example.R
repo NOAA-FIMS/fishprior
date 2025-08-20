@@ -3,6 +3,7 @@ species_list <- c(
   "Gadus chalcogrammus",
   "Anoplopoma fimbria"
 )
-traits_example <- summarize_fishlife_traits(species_list)
+traits_example <- get_fishbase_traits(spec_names = species_list) |>
+  summarize_fishbase_traits()
 
 usethis::use_data(traits_example, overwrite = TRUE)
