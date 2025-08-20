@@ -53,6 +53,7 @@ summarize_fishlife_traits <- function(
 #'
 #' @inheritParams summarize_fishlife_traits
 #' @param data A data frame returned by [FishLife::FishBase_and_Morphometrics].
+#' @importFrom rlang .data
 #' @noRd
 summarize_fishlife_trait <- function(species, keep_regexp, data) {
   # TODO: Move this check to the top of summarize_fishlife_traits so that the
@@ -77,7 +78,7 @@ summarize_fishlife_trait <- function(species, keep_regexp, data) {
     se = trait_se
   ) |>
     dplyr::filter(
-      grepl(keep_regexp, trait)
+      grepl(keep_regexp, .data$trait)
     ) |>
     transform_data_frame()
   # TODO: get mean_normal and sd_normal

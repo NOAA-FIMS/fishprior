@@ -10,19 +10,8 @@ summarize_fishbase_traits(fb)
 \item{fb}{A tibble returned by \code{\link[=get_fishbase_traits]{get_fishbase_traits()}}.}
 }
 \value{
-A tibble that is grouped by Species with the following columns:
-\describe{
-\item{\code{Species}}{Species name.}
-\item{\code{trait}}{Name of the trait (e.g., \code{log(length_infinity)}).}
-\item{\code{mean_normal}}{Mean of the trait in normal space}
-\item{\code{sd_normal}}{Approximate standard deviation of the trait in normal
-space.}
-\item{\code{mean}}{Mean of the log-transformed trait}
-\item{\code{sd}}{Approximate standard deviation of the log-transformed trait.}
-}
+A tibble grouped by Species and trait with log-transformed stats.
 }
 \description{
-Takes the output of \code{\link[=get_fishbase_traits]{get_fishbase_traits()}} and summarizes it into
-log-transformed life-history traits. The returned tibble includes species,
-trait name, mean (on log-scale), and approximate standard error (SE).
+Summarize FishBase trait data into log-transformed traits
 }

@@ -2,6 +2,7 @@
 #'
 #' @param data A data frame with the following columns: `Species`, `trait`,
 #'   `mean`, and `se`. The `mean` and `se` columns should be in log space.
+#' @importFrom rlang .data
 #' @return
 #' The original data frame is returned with two additional columns,
 #' `mean_normal` and `sd_normal`.
@@ -22,6 +23,6 @@ transform_data_frame <- function(data) {
   data[["sd_normal"]] <- sqrt(var_normal)
   tibble::as_tibble(data) |>
     dplyr::select(
-      Species, trait, mean_normal, sd_normal, mean, se
+      .data$Species, .data$trait, .data$mean_normal, .data$sd_normal, .data$mean, .data$se
     )
 }
