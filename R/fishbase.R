@@ -4,6 +4,7 @@
 #' containing life-history traits relevant for meta-analysis or prior construction.
 #' @param spec_names A character vector of species names (e.g., "Gadus morhua").
 #' @importFrom rlang .data
+#' @importFrom stats na.omit
 #' @return A tibble with metadata and trait information.
 #' @export
 get_fishbase_traits <- function(spec_names = NULL) {
@@ -22,7 +23,7 @@ get_fishbase_traits <- function(spec_names = NULL) {
       C_Code = as.character(.data$C_Code),
       E_CODE = as.numeric(.data$E_CODE)
     )
-
+  
   char <- rfishbase::popchar(species_list = spec_names) |>
     dplyr::select(
       .data$Species, .data$SpecCode, .data$Sex, .data$SourceRef,
@@ -32,7 +33,7 @@ get_fishbase_traits <- function(spec_names = NULL) {
       Lmax = as.numeric(.data$Lmax),
       C_Code = as.character(.data$C_Code)
     )
-
+  
   lw <- rfishbase::poplw(species_list = spec_names) |>
     dplyr::select(
       .data$Species, .data$SpecCode, .data$StockCode,
@@ -43,7 +44,7 @@ get_fishbase_traits <- function(spec_names = NULL) {
     dplyr::mutate(
       C_Code = as.character(.data$C_Code)
     )
-
+  
   mat <- rfishbase::maturity(species_list = spec_names) |>
     dplyr::select(
       .data$Species, .data$SpecCode, .data$StockCode, .data$Sex,
@@ -56,7 +57,7 @@ get_fishbase_traits <- function(spec_names = NULL) {
       C_Code = as.character(.data$C_Code),
       E_CODE = as.numeric(.data$E_CODE)
     )
-
+  
   fecund <- rfishbase::fecundity(species_list = spec_names) |>
     dplyr::select(
       .data$Species, .data$SpecCode, .data$StockCode, .data$Locality,
@@ -74,7 +75,7 @@ get_fishbase_traits <- function(spec_names = NULL) {
       E_CODE = as.numeric(.data$E_CODE)
     ) |>
     dplyr::rename(Type = .data$FecundityType)
-
+  
   traits <- list(
     popgrowth = growth,
     popchar = char,
@@ -116,16 +117,17 @@ get_fishbase_traits <- function(spec_names = NULL) {
     dplyr::ungroup() |>
     dplyr::left_join(
       get_fishbase_country_names(),
-      by = dplyr::join_by(C_Code)
+      by = c("C_Code" = "C_Code")
     ) |>
     dplyr::left_join(
       get_fishbase_ecosystem_names(spec_names),
-      by = dplyr::join_by(E_CODE)
+      by = c("E_CODE" = "E_CODE")
     ) |>
     dplyr::tibble()
-
+  
   return(traits)
 }
+
 
 #' Summarize FishBase trait data into log-transformed traits
 #'
