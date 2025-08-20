@@ -9,7 +9,7 @@ Authors@R: c(
     person(c("Eric", "J."), "Ward", role = "aut",
            comment = c(ORCID = "0000-0002-4359-0296"))
   )
-Description: This package extracts information the the FishLife R package
+Description: This package extracts information the the rfishbase R package
     to inform priors for parameters that are commonly included in
     assessment models of marine resources. The parameters of interest are
     life-history parameters such as natural mortality but can also pertain
@@ -19,7 +19,7 @@ License: GPL (>= 3) | file LICENSE
 URL: https://github.com/noaa-fims/fishprior
 BugReports: https://github.com/noaa-fims/fishprior/issues
 Depends: 
-    R (>= 3.5)
+    R (>= 4.1)
 Imports:
     cli,
     dplyr,
@@ -39,8 +39,6 @@ Suggests:
     utils
 VignetteBuilder:
     knitr
-Remotes: 
-    github::james-thorson/FishLife@main
 Config/testthat/edition: 3
 Config/testthat/parallel: false
 Encoding: UTF-8
