@@ -22,7 +22,7 @@ get_fishbase_traits <- function(spec_names = NULL) {
       C_Code = as.character(.data$C_Code),
       E_CODE = as.numeric(.data$E_CODE)
     )
-  
+
   char <- rfishbase::popchar(species_list = spec_names) |>
     dplyr::select(
       "Species", "SpecCode", "Sex", "SourceRef",
@@ -32,7 +32,7 @@ get_fishbase_traits <- function(spec_names = NULL) {
       Lmax = as.numeric(.data$Lmax),
       C_Code = as.character(.data$C_Code)
     )
-  
+
   lw <- rfishbase::poplw(species_list = spec_names) |>
     dplyr::select(
       "Species", "SpecCode", "StockCode",
@@ -43,7 +43,7 @@ get_fishbase_traits <- function(spec_names = NULL) {
     dplyr::mutate(
       C_Code = as.character(.data$C_Code)
     )
-  
+
   mat <- rfishbase::maturity(species_list = spec_names) |>
     dplyr::select(
       "Species", "SpecCode", "StockCode", "Sex",
@@ -56,7 +56,7 @@ get_fishbase_traits <- function(spec_names = NULL) {
       C_Code = as.character(.data$C_Code),
       E_CODE = as.numeric(.data$E_CODE)
     )
-  
+
   fecund <- rfishbase::fecundity(species_list = spec_names) |>
     dplyr::select(
       "Species", "SpecCode", "StockCode", "Locality",
@@ -74,7 +74,7 @@ get_fishbase_traits <- function(spec_names = NULL) {
       E_CODE = as.numeric(.data$E_CODE)
     ) |>
     dplyr::rename(Type = FecundityType)
-  
+
   traits <- list(
     popgrowth = growth,
     popchar = char,
@@ -123,7 +123,7 @@ get_fishbase_traits <- function(spec_names = NULL) {
       by = c("E_CODE" = "E_CODE")
     ) |>
     dplyr::tibble()
-  
+
   return(traits)
 }
 
@@ -136,15 +136,19 @@ get_fishbase_traits <- function(spec_names = NULL) {
 #' @export
 summarize_fishbase_traits <- function(fb) {
   get_mean_log <- function(x) {
-    if (all(is.na(x))) return(NA)
+    if (all(is.na(x))) {
+      return(NA)
+    }
     mean(log(x[x > 0]), na.rm = TRUE)
   }
-  
+
   get_sd_log <- function(x) {
-    if (all(is.na(x))) return(NA)
+    if (all(is.na(x))) {
+      return(NA)
+    }
     stats::sd(log(x[x > 0]), na.rm = TRUE)
   }
-  
+
   fb |>
     dplyr::filter(.data$trait %in% c("Loo", "K", "M", "Lmax", "tmax", "Lm", "tm", "FecundityMean")) |>
     dplyr::group_by(.data$Species, .data$trait) |>
