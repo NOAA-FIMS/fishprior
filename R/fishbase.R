@@ -9,14 +9,14 @@
 get_fishbase_traits <- function(spec_names = NULL) {
   growth <- rfishbase::popgrowth(species_list = spec_names) |>
     dplyr::select(
-      .data$Species, .data$SpecCode, .data$Sex, .data$PopGrowthRef,
-      .data$DataSourceRef, .data$Locality, .data$YearStart, .data$YearEnd,
-      .data$Number, .data$Type,
-      .data$Loo, .data$SE_Loo, .data$SD_Loo,
-      .data$K, .data$SE_K, .data$SD_K,
-      .data$to, .data$SE_to, .data$SD_to,
-      .data$M, .data$SE_M, .data$SD_M,
-      .data$Winfinity, .data$C_Code, .data$E_CODE
+      "Species", "SpecCode", "Sex", "PopGrowthRef",
+      "DataSourceRef", "Locality", "YearStart", "YearEnd",
+      "Number", "Type",
+      "Loo", "SE_Loo", "SD_Loo",
+      "K", "SE_K", "SD_K",
+      "to", "SE_to", "SD_to",
+      "M", "SE_M", "SD_M",
+      "Winfinity", "C_Code", "E_CODE"
     ) |>
     dplyr::mutate(
       C_Code = as.character(.data$C_Code),
@@ -25,8 +25,8 @@ get_fishbase_traits <- function(spec_names = NULL) {
   
   char <- rfishbase::popchar(species_list = spec_names) |>
     dplyr::select(
-      .data$Species, .data$SpecCode, .data$Sex, .data$SourceRef,
-      .data$Wmax, .data$Lmax, .data$tmax, .data$Locality, .data$C_Code
+      "Species", "SpecCode", "Sex", "SourceRef",
+      "Wmax", "Lmax", "tmax", "Locality", "C_Code"
     ) |>
     dplyr::mutate(
       Lmax = as.numeric(.data$Lmax),
@@ -35,10 +35,10 @@ get_fishbase_traits <- function(spec_names = NULL) {
   
   lw <- rfishbase::poplw(species_list = spec_names) |>
     dplyr::select(
-      .data$Species, .data$SpecCode, .data$StockCode,
-      .data$LengthMax, .data$Type, .data$Number, .data$Sex,
-      .data$a, .data$b, .data$SEa, .data$SEb, .data$SDa, .data$SDb,
-      .data$Locality, .data$C_Code
+      "Species", "SpecCode", "StockCode",
+      "LengthMax", "Type", "Number", "Sex",
+      "a", "b", "SEa", "SEb", "SDa", "SDb",
+      "Locality", "C_Code"
     ) |>
     dplyr::mutate(
       C_Code = as.character(.data$C_Code)
@@ -46,10 +46,10 @@ get_fishbase_traits <- function(spec_names = NULL) {
   
   mat <- rfishbase::maturity(species_list = spec_names) |>
     dplyr::select(
-      .data$Species, .data$SpecCode, .data$StockCode, .data$Sex,
-      .data$Locality, .data$AgeMatRef, .data$tm, .data$Number,
-      .data$SE_tm, .data$SD_tm, .data$Lm, .data$SD_Lm, .data$SE_Lm,
-      .data$C_Code, .data$E_CODE
+      "Species", "SpecCode", "StockCode", "Sex",
+      "Locality", "AgeMatRef", "tm", "Number",
+      "SE_tm", "SD_tm", "Lm", "SD_Lm", "SE_Lm",
+      "C_Code", "E_CODE"
     ) |>
     dplyr::mutate(
       StockCode = as.numeric(.data$StockCode),
@@ -59,10 +59,10 @@ get_fishbase_traits <- function(spec_names = NULL) {
   
   fecund <- rfishbase::fecundity(species_list = spec_names) |>
     dplyr::select(
-      .data$Species, .data$SpecCode, .data$StockCode, .data$Locality,
-      .data$FecundityMin, .data$FecundityMax, .data$FecundityMean,
-      .data$FecundityType, .data$Number, .data$a, .data$b,
-      .data$SEa, .data$SEb, .data$SDa, .data$SDb, .data$C_Code, .data$E_CODE
+      "Species", "SpecCode", "StockCode", "Locality",
+      "FecundityMin", "FecundityMax", "FecundityMean",
+      "FecundityType", "Number", "a", "b",
+      "SEa", "SEb", "SDa", "SDb", "C_Code", "E_CODE"
     ) |>
     dplyr::mutate(
       SDa = ifelse(is.na(.data$SDa), NA_real_, .data$SDa),
@@ -73,7 +73,7 @@ get_fishbase_traits <- function(spec_names = NULL) {
       C_Code = as.character(.data$C_Code),
       E_CODE = as.numeric(.data$E_CODE)
     ) |>
-    dplyr::rename(Type = .data$FecundityType)
+    dplyr::rename(Type = FecundityType)
   
   traits <- list(
     popgrowth = growth,

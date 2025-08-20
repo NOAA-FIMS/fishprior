@@ -23,6 +23,6 @@ transform_data_frame <- function(data) {
   data[["sd_normal"]] <- sqrt(var_normal)
   tibble::as_tibble(data) |>
     dplyr::select(
-      .data$Species, .data$trait, .data$mean_normal, .data$sd_normal, .data$mean, .data$se
+      "Species", "trait", "mean_normal", "sd_normal", "mean", "se"
     )
 }
