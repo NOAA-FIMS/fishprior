@@ -18,7 +18,7 @@ setClass(
     trait = "character",
     type = "character",
     group = "character",
-    data = "tbl_df"
+    data = "data.frame"
   )
 )
 
@@ -62,6 +62,10 @@ methods::setGeneric(
     standardGeneric("get_distribution")
   }
 )
+
+#' @export
+#' @rdname get_
+#' @keywords getters
 methods::setMethod(
   f = "get_distribution",
   signature = "prior",

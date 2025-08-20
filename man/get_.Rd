@@ -3,6 +3,7 @@
 \name{get_}
 \alias{get_}
 \alias{get_distribution}
+\alias{get_distribution,prior-method}
 \alias{get_parameters}
 \alias{get_parameters,prior-method}
 \alias{get_trait}
@@ -16,6 +17,8 @@
 \title{Get information out of the prior class}
 \usage{
 get_distribution(object)
+
+\S4method{get_distribution}{prior}(object)
 
 get_parameters(object)
 
