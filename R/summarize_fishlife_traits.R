@@ -42,7 +42,7 @@ summarize_fishlife_traits <- function(
   data <- FishBase_and_Morphometrics
 
   purrr::map_df(
-    species_list,
+    species,
     summarize_fishlife_trait,
     data = data,
     keep_regexp = keep_regexp

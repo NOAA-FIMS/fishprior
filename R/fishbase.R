@@ -259,6 +259,7 @@ get_fishbase_traits <- function(spec_names = NULL) {
 #'   \item{`mean`}{Mean of the log-transformed trait}
 #'   \item{`sd`}{Approximate standard deviation of the log-transformed trait.}
 #' }
+#' @importFrom stats sd
 #' @export
 summarize_fishbase_traits <- function(fb) {
   get_mean_log <- function(x) {
