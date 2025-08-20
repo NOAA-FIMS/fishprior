@@ -23,7 +23,6 @@ Depends:
 Imports:
     cli,
     dplyr,
-    FishLife,
     ggplot2,
     methods,
     rfishbase,
