@@ -215,7 +215,7 @@ methods::setMethod(
 )
 
 ## Plotters ----
-
+#' @importFrom rlang .data
 methods::setMethod(
   f = "plot",
   signature = "prior",
@@ -224,8 +224,8 @@ methods::setMethod(
     ggplot2::ggplot(
       plot_data,
       ggplot2::aes(
-        x = value,
-        col = name
+        x = .data$value,
+        col = .data$group
       )
     ) +
       ggplot2::geom_histogram() +
