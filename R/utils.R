@@ -4,6 +4,7 @@
 #' with the latest version available on CRAN. It prints a message if the
 #' installed version is outdated.
 #'
+#' @importFrom utils available.packages packageVersion
 #' @examples
 #' check_rfishbase_version()
 #'
