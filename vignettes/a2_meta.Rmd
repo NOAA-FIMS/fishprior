@@ -1,0 +1,82 @@
+---
+title: "Doing a meta-analysis with the fishprior package"
+output: github_document
+vignette: >
+  %\VignetteIndexEntry{Doing a meta-analysis with the fishprior package}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+The vignette provides an example of using the fishprior package to combine parameters across studies in a meta-analysis.
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(fishprior)
+library(dplyr)
+```
+
+## Data
+
+As an example, we'll use data from Atlantic cod. 
+
+```{r example-cod, warning=FALSE, message=FALSE}
+cod_traits <- get_fishbase_traits(spec_names = "Gadus morhua")
+```
+
+## Weighting studies equally
+
+To generate a prior for a parameter of interest, like growth ('K'), the simplest approach to combining estimates across studies (this is basically what's done in the demonstration vignette)
+
+```{r}
+cod_k <- dplyr::filter(cod_traits, trait=="K", !is.na(value))
+```
+
+These could be further filtered, by sex or region, and then combined into a single point estimate. Weighting each study equally, we can calculate a mean and standard error on the mean (we'll just use the estimates in normal space)
+
+```{r}
+point_estimate <- summarize_fishbase_traits(cod_k)
+point_estimate$n <- nrow(cod_k)
+point_estimate$se_mean <- point_estimate$sd_normal / point_estimate$n
+point_estimate$lower_95 <- point_estimate$mean_normal - 1.96 * point_estimate$se_mean
+point_estimate$upper_95 <- point_estimate$mean_normal + 1.96 * point_estimate$se_mean
+```
+
+## Using sample sizes as weights
+
+A slightly more complex approach is to use the sample sizes from each study as weights. In an ideal world, we'd also have the SEs of estimates, but those don't exist for most FishBase studies.
+
+Before implementing the weighted average, we need to make decisions about how to assign sample sizes to studies with NA values. To keep things simple, we'll assign missing values to be the same as the smallest sample size (note that most `Number` entries are missing)
+
+```{r echo=TRUE}
+summary(cod_k$Number)
+
+cod_k$Number[which(is.na(cod_k$Number))] <- min(cod_k$Number, na.rm=T)
+```
+
+```{r}
+weights <- cod_k$Number
+weighted_mean <- sum(weights * cod_k$value) / sum(weights)
+
+se_inverse <- sqrt(1 / sum(weights))
+
+weighted_estimates <- data.frame(
+  estimate = weighted_mean,
+  se_mean = se_inverse,  
+  lower_95 = weighted_mean - 1.96 * se_inverse,
+  upper_95 = weighted_mean + 1.96 * se_inverse
+)
+```
+
+Now we can compare the unweighted to weighted estimates,
+
+```{r echo=FALSE}
+point_estimate 
+```
+
+and weighted
+```{r echo=FALSE}
+weighted_estimates
+```
+
+The weighted estimates have a higher SE around the mean compared to the unweighted version, but the biggest difference is that the unweighted mean is much larger (~ 0.18) versus (~ 0.14) -- this is because there are about 5 studies from the North Sea / Baltic Sea that have very large sample sizes and relatively small `k` values.
+
