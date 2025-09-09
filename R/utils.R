@@ -17,9 +17,15 @@ check_rfishbase_version <- function() {
   }
 
   installed_version <- as.character(packageVersion(pkg))
-  available <- available.packages()
-  cran_version <- available[pkg, "Version"]
-  
+
+  cran_version <- tryCatch({
+    available <- available.packages()
+    available[pkg, "Version"]
+  }, error = function(e) {
+    message("Could not check CRAN version")
+    return(NA)
+  })
+
   if (is.na(cran_version)) {
     return(invisible(FALSE))
   }
