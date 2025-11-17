@@ -1,0 +1,21 @@
+<urlset xmlns = 'http://www.sitemaps.org/schemas/sitemap/0.9'>
+<url><loc>/404.html</loc></url>
+<url><loc>/LICENSE-text.html</loc></url>
+<url><loc>/articles/demo.html</loc></url>
+<url><loc>/articles/index.html</loc></url>
+<url><loc>/articles/meta.html</loc></url>
+<url><loc>/authors.html</loc></url>
+<url><loc>/index.html</loc></url>
+<url><loc>/reference/check_rfishbase_version.html</loc></url>
+<url><loc>/reference/fishprior-package.html</loc></url>
+<url><loc>/reference/get_.html</loc></url>
+<url><loc>/reference/get_fishbase_traits.html</loc></url>
+<url><loc>/reference/index.html</loc></url>
+<url><loc>/reference/make_growth_coefficient_prior.html</loc></url>
+<url><loc>/reference/make_informative_mortality_prior.html</loc></url>
+<url><loc>/reference/make_mortality_prior.html</loc></url>
+<url><loc>/reference/summarize_fishbase_traits.html</loc></url>
+<url><loc>/reference/traits_example.html</loc></url>
+<url><loc>/reference/translate_trait_names.html</loc></url>
+</urlset>
+
