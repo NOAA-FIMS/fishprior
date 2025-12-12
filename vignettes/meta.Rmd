@@ -1,0 +1,167 @@
+---
+title: "Meta-analyses with the fishprior R package"
+output: github_document
+vignette: >
+  %\VignetteIndexEntry{Meta-analyses with the fishprior R package}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(fishprior)
+library(ggplot2)
+library(dplyr)
+library(knitr)
+```
+
+The vignette provides a slightly more complicated example of how to use the fishprior package to combine parameters into a meta-analysis. The `summarize_fishbase_traits()` function produces summary statistics across studies, weighting estimates equally and ignoring sample sizes or standard errors of estimates. We provide two case studies below, first examining maximum length of European mackerel (weighting studies by sample size), and second examining growth rates of sablefish (weighting studies by standard errors).
+
+FishBase includes sample sizes (`Number`) and standard errors (`SE`) when available, however these may not be available for most records, and there may be variability in reporting by species or trait type. For full details, see the following tables
+
+```{r make-tables, message=FALSE, warning = FALSE, echo=FALSE}
+m <- data.frame("FishBase tables used" = c("rfishbase::popgrowth",
+                               "rfishbase::popchar",
+                               "rfishbase::poplw",
+                               "rfishbase::maturity",
+                               "rfishbase::fecundity"))
+knitr::kable(m)
+```
+
+## Combining estimates using sample sizes
+
+To illustrate how point estimates may combined in a more traditional meta-analysis, we'll use data from the European mackerel (*Scomber scombrus*). Data can be obtained from FishBase using `get_fishbase_traits()` -- more detailed information is in the introductory vignette. We will focus this example on maximum length (`LengthMax`) because it is one of the variables in `rfishbase::poplw()` that has an associated sample size, but not standard error.
+
+```{r example-fishbase, warning=FALSE, message=FALSE}
+species_list <- c(
+  "Scomber scombrus"
+)
+example_base_raw <- get_fishbase_traits(spec_names = species_list)
+example_base_raw
+```
+
+There are differences in reporting between `Number` and `SE`, with fewer studies having standard errors reported. There may be some rounding or reporting issues with `SE`, because at least one of the values is 0. There's quite a bit of variation by trait type, with estimates from studies estimating length-weight regressions reporting `Number` more commonly than other studies,
+
+```{r n-table, warning=FALSE, message=FALSE, echo=FALSE}
+example_base_raw |>
+  dplyr::filter(Number > 0) |>
+  dplyr::group_by(trait) |>
+  dplyr::summarise(value = dplyr::n()) |>
+  ggplot(aes(trait, value)) + geom_bar(stat = "identity") + 
+  labs(x = "", y = "Sample size",
+       title="Reported sample sizes for European mackerel studies") + 
+  theme_bw()
+```
+
+We will filter out studies that don't report `Number`, but an alternative approach would be to set the `Number` for these studies to some small value (the smallest reported across all studies, or 1, etc)
+
+```{r example-filter, warning=FALSE, message=FALSE}
+filtered_traits <- dplyr::filter(example_base_raw,
+                                 Number > 0,
+                                 trait %in% c("LengthMax"))
+```
+
+### Variance weighting
+
+The first way to combine estimates is by applying variance weighting. To do this, we use `Number` as the weights for the weighted mean and variance,
+
+```{r summarize-cod, warning=FALSE, message=FALSE}
+weighted_summary <- filtered_traits |>
+  dplyr::summarise(
+    weighted_mean = weighted.mean(value, w = Number),
+    simple_mean = mean(value),
+    weighted_var = sum(Number * (value - weighted_mean)^2) / sum(Number),
+    weighted_se = sqrt(weighted_var / dplyr::n()),
+    total_n = sum(Number),
+    n_studies = dplyr::n()
+  )
+weighted_summary
+```
+
+The vertical blue lines here represent the weighted mean (and 95% confidence intervals); the weighted mean is slightly larger than the simple mean (42).
+
+```{r echo=FALSE}
+filtered_traits |>
+  ggplot(aes(value)) + geom_histogram() + 
+  labs(x = "", y = "Count",
+       title="Maximum lengths in European mackerel studies") + 
+  theme_bw() + 
+  geom_vline(aes(xintercept = weighted_summary$weighted_mean - 1.96*weighted_summary$weighted_se), col = "blue", linetype=2) + 
+  geom_vline(aes(xintercept = weighted_summary$weighted_mean + 1.96*weighted_summary$weighted_se), col = "blue", linetype=2) +
+  geom_vline(aes(xintercept = weighted_summary$weighted_mean), col = "blue", linewidth=1.1)
+```
+
+### Model based weighting
+
+Without the reported study specific standard errors, it is difficult to do a true meta-analysis. However we can estimate a common mean and observation variance, which is another way to use the sample sizes as weights. The reported mean length $y_i$ can be assumed to be an observation of the true study-specific unobserved mean length $\theta_i$, where $\sigma$ represents the variance across studies,
+
+$$y_i \sim Normal(\theta_i, \frac{\sigma}{\sqrt{n_i}})$$ and then the random effects can be estimated with a common hyperparameters
+
+$$\theta_i \sim Normal(\mu, \tau)$$
+
+To fit this model in `brms`, we can use the following code. Because maximum size can be skewed, we'll fit the model in log space,
+
+```{r, message = FALSE, warning=FALSE, echo=TRUE, eval=FALSE}
+library(brms)
+filtered_traits$sqrt_n <- 1 / sqrt(filtered_traits$Number)
+filtered_traits$study_id <- seq_len(nrow(filtered_traits))
+filtered_traits$log_n <- log(filtered_traits$value)
+
+formula <- bf(
+  log_n ~ theta,
+  theta ~ 1 + (1 | study_id),
+  sigma ~ 0 + sqrt_n,
+  nl = TRUE
+)
+
+fit <- brm(
+  formula,
+  data = filtered_traits,
+  family = gaussian(),
+  chains = 4,
+  iter = 5000
+)
+```
+
+## Combining estimates using meta-analysis
+
+For cases where the standard errors exist, a second approach is to do a true meta-analysis and use the standard errors as weights. For this example, we'll focus a meta-analysis on the growth coefficient (`k`) of sablefish (*Anoplopoma fimbria*)
+
+```{r example-sablefish, warning=FALSE, message=FALSE}
+species_list <- c(
+  "Anoplopoma fimbria")
+sablefish_traits <- get_fishbase_traits(spec_names = species_list)
+
+filtered_traits <- dplyr::filter(sablefish_traits,
+                                 SE > 0,
+                                 trait %in% c("K"))
+```
+
+There's a small number of studies here from 2 regions in the Pacific Ocean, and if we look at breakdown by region, there seems to be substantially smaller values in Alaska.
+
+```{r make-sablefish-table, echo=FALSE, warning=FALSE, message=FALSE}
+knitr::kable(filtered_traits[,c("Locality","value", "SE")])
+```
+
+It probably makes more sense for interpretation and estimation to focus on a single region, so we will only use estimates from Alaska
+
+```{r example-ak-sablefish, warning=FALSE, message=FALSE}
+ak_traits <- dplyr::filter(filtered_traits,
+                                 Locality %in% c("Gulf of Alaska"))
+```
+
+The model here can be written as 
+
+$$y_i \sim Normal(\theta_i, \text{SE}_i)$$ where
+and 
+$$\theta_i \sim Normal(\mu, \tau)$$
+
+where the major contrast to above is not assuming a population level $\sigma$, and instead providing the standard error value directly. 
+
+An advantage of this approach is that it takes advantages of brms' existing machinery for doing meta-analyses and using the `SE` directly in the `se()` function
+
+```{r warning=FALSE, message=FALSE, echo=TRUE, eval=FALSE}
+ak_traits$study <- seq_len(nrow(ak_traits))
+fit <- brm(value | se(SE) ~ 1 + (1 | study), data = ak_traits)
+```
+
