@@ -17,8 +17,9 @@
 #' data frame with the species name, `"parameter"` specifying which parameter
 #' the prior is for, and `"prior"` that contains the S4 class `prior`.
 make_mortality_prior <- function(
-    data,
-    type = c("diffuse", "informative")) {
+  data,
+  type = c("diffuse", "informative")
+) {
   type <- rlang::arg_match(type)
 
   # Informative (Hamel--Cope) prior
@@ -72,8 +73,9 @@ make_informative_mortality_prior <- function(log_maximum_age) {
 
 # TODO: change se to standard deviation on the log scale
 make_diffuse_mortality_prior <- function(
-    log_natural_mortality,
-    standard_deviation_lognormal) {
+  log_natural_mortality,
+  standard_deviation_lognormal
+) {
   if (length(log_natural_mortality) != 1) {
     cli::cli_abort("{.var log_natural_mortality} must be a single value")
   }

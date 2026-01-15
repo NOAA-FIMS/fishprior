@@ -16,8 +16,9 @@
 #' @param type A character string indicating the type of prior. The default
 #'   is "informative".
 make_growth_coefficient_prior <- function(
-    data,
-    type = c("informative", "diffuse")) {
+  data,
+  type = c("informative", "diffuse")
+) {
   if (length(unique(data[["name"]])) > 1) {
     cli::cli_abort(c(
       "{.fn make_growth_coefficient_prior} works with just one group.",
