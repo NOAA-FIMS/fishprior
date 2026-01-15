@@ -143,7 +143,7 @@ get_fishbase_traits <- function(spec_names = NULL) {
   species_info <- rfishbase::species() |>
     dplyr::select(SpecCode, FBname) |>
     dplyr::rename(Species = FBname)
-  traits <- dplyr::left_join(traits, species_info)
+  traits <- dplyr::left_join(traits, species_info, by = "SpecCode")
   
   return(traits)
 }
