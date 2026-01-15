@@ -17,11 +17,11 @@ test_that("get_fishbase_traits() works with correct inputs", {
   expect_equal(
     object = colnames(traits),
     expected = c(
-      "rfishbase", "Species", "SpecCode", "Sex", "PopGrowthRef",
+      "rfishbase", "SpecCode", "Sex", "PopGrowthRef",
       "DataSourceRef", "Locality", "YearStart", "YearEnd", "Number",
       "Type", "C_Code", "E_CODE", "SourceRef",
       "StockCode", "AgeMatRef", "trait", "value", "SE",
-      "SD", "country", "EcosystemName"
+      "SD", "country", "EcosystemName", "Species"
     )
   )
 
