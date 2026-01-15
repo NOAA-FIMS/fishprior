@@ -11,32 +11,35 @@
 #' @export
 check_rfishbase_version <- function() {
   pkg <- "rfishbase"
-  
+
   if (!requireNamespace(pkg, quietly = TRUE)) {
     message("rfishbase is not installed.")
     return(invisible(FALSE))
   }
-  
+
   installed_version <- as.character(packageVersion(pkg))
-  
-  cran_version <- tryCatch({
-    available <- available.packages()
-    available[pkg, "Version"]
-  }, error = function(e) {
-    message("Could not check CRAN version")
-    return(NA)
-  })
-  
+
+  cran_version <- tryCatch(
+    {
+      available <- available.packages()
+      available[pkg, "Version"]
+    },
+    error = function(e) {
+      message("Could not check CRAN version")
+      return(NA)
+    }
+  )
+
   if (is.na(cran_version)) {
     return(invisible(FALSE))
   }
-  
+
   if (installed_version != cran_version) {
     message(sprintf(
-      "rfishbase is out of date.\n  Installed: %s\n  CRAN: %s", 
+      "rfishbase is out of date.\n  Installed: %s\n  CRAN: %s",
       installed_version, cran_version
     ))
-  } 
-  
+  }
+
   invisible(TRUE)
 }

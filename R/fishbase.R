@@ -9,9 +9,8 @@
 #' @return A tibble with metadata and trait information.
 #' @export
 get_fishbase_traits <- function(spec_names = NULL) {
-  
   check_rfishbase_version()
-  
+
   growth <- rfishbase::popgrowth(species_list = spec_names) |>
     dplyr::select(
       "SpecCode", "Sex", "PopGrowthRef",
@@ -144,7 +143,7 @@ get_fishbase_traits <- function(spec_names = NULL) {
     dplyr::select(SpecCode, FBname) |>
     dplyr::rename(Species = FBname)
   traits <- dplyr::left_join(traits, species_info, by = "SpecCode")
-  
+
   return(traits)
 }
 

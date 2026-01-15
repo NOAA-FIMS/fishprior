@@ -20,11 +20,13 @@ The vignette provides a slightly more complicated example of how to use the fish
 FishBase includes sample sizes (`Number`) and standard errors (`SE`) when available, however these may not be available for most records, and there may be variability in reporting by species or trait type. For full details, see the following tables
 
 ```{r make-tables, message=FALSE, warning = FALSE, echo=FALSE}
-m <- data.frame("FishBase tables used" = c("rfishbase::popgrowth",
-                               "rfishbase::popchar",
-                               "rfishbase::poplw",
-                               "rfishbase::maturity",
-                               "rfishbase::fecundity"))
+m <- data.frame("FishBase tables used" = c(
+  "rfishbase::popgrowth",
+  "rfishbase::popchar",
+  "rfishbase::poplw",
+  "rfishbase::maturity",
+  "rfishbase::fecundity"
+))
 knitr::kable(m)
 ```
 
@@ -47,18 +49,23 @@ example_base_raw |>
   dplyr::filter(Number > 0) |>
   dplyr::group_by(trait) |>
   dplyr::summarise(value = dplyr::n()) |>
-  ggplot(aes(trait, value)) + geom_bar(stat = "identity") + 
-  labs(x = "", y = "Sample size",
-       title="Reported sample sizes for European mackerel studies") + 
+  ggplot(aes(trait, value)) +
+  geom_bar(stat = "identity") +
+  labs(
+    x = "", y = "Sample size",
+    title = "Reported sample sizes for European mackerel studies"
+  ) +
   theme_bw()
 ```
 
 We will filter out studies that don't report `Number`, but an alternative approach would be to set the `Number` for these studies to some small value (the smallest reported across all studies, or 1, etc)
 
 ```{r example-filter, warning=FALSE, message=FALSE}
-filtered_traits <- dplyr::filter(example_base_raw,
-                                 Number > 0,
-                                 trait %in% c("LengthMax"))
+filtered_traits <- dplyr::filter(
+  example_base_raw,
+  Number > 0,
+  trait %in% c("LengthMax")
+)
 ```
 
 ### Variance weighting
@@ -82,13 +89,16 @@ The vertical blue lines here represent the weighted mean (and 95% confidence int
 
 ```{r echo=FALSE}
 filtered_traits |>
-  ggplot(aes(value)) + geom_histogram() + 
-  labs(x = "", y = "Count",
-       title="Maximum lengths in European mackerel studies") + 
-  theme_bw() + 
-  geom_vline(aes(xintercept = weighted_summary$weighted_mean - 1.96*weighted_summary$weighted_se), col = "blue", linetype=2) + 
-  geom_vline(aes(xintercept = weighted_summary$weighted_mean + 1.96*weighted_summary$weighted_se), col = "blue", linetype=2) +
-  geom_vline(aes(xintercept = weighted_summary$weighted_mean), col = "blue", linewidth=1.1)
+  ggplot(aes(value)) +
+  geom_histogram() +
+  labs(
+    x = "", y = "Count",
+    title = "Maximum lengths in European mackerel studies"
+  ) +
+  theme_bw() +
+  geom_vline(aes(xintercept = weighted_summary$weighted_mean - 1.96 * weighted_summary$weighted_se), col = "blue", linetype = 2) +
+  geom_vline(aes(xintercept = weighted_summary$weighted_mean + 1.96 * weighted_summary$weighted_se), col = "blue", linetype = 2) +
+  geom_vline(aes(xintercept = weighted_summary$weighted_mean), col = "blue", linewidth = 1.1)
 ```
 
 ### Model based weighting
@@ -129,25 +139,30 @@ For cases where the standard errors exist, a second approach is to do a true met
 
 ```{r example-sablefish, warning=FALSE, message=FALSE}
 species_list <- c(
-  "Anoplopoma fimbria")
+  "Anoplopoma fimbria"
+)
 sablefish_traits <- get_fishbase_traits(spec_names = species_list)
 
-filtered_traits <- dplyr::filter(sablefish_traits,
-                                 SE > 0,
-                                 trait %in% c("K"))
+filtered_traits <- dplyr::filter(
+  sablefish_traits,
+  SE > 0,
+  trait %in% c("K")
+)
 ```
 
 There's a small number of studies here from 2 regions in the Pacific Ocean, and if we look at breakdown by region, there seems to be substantially smaller values in Alaska.
 
 ```{r make-sablefish-table, echo=FALSE, warning=FALSE, message=FALSE}
-knitr::kable(filtered_traits[,c("Locality","value", "SE")])
+knitr::kable(filtered_traits[, c("Locality", "value", "SE")])
 ```
 
 It probably makes more sense for interpretation and estimation to focus on a single region, so we will only use estimates from Alaska
 
 ```{r example-ak-sablefish, warning=FALSE, message=FALSE}
-ak_traits <- dplyr::filter(filtered_traits,
-                                 Locality %in% c("Gulf of Alaska"))
+ak_traits <- dplyr::filter(
+  filtered_traits,
+  Locality %in% c("Gulf of Alaska")
+)
 ```
 
 The model here can be written as 
