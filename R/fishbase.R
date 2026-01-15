@@ -14,7 +14,7 @@ get_fishbase_traits <- function(spec_names = NULL) {
   
   growth <- rfishbase::popgrowth(species_list = spec_names) |>
     dplyr::select(
-      "Species", "SpecCode", "Sex", "PopGrowthRef",
+      "SpecCode", "Sex", "PopGrowthRef",
       "DataSourceRef", "Locality", "YearStart", "YearEnd",
       "Number", "Type",
       "Loo", "SE_Loo", "SD_Loo",
@@ -30,7 +30,7 @@ get_fishbase_traits <- function(spec_names = NULL) {
 
   char <- rfishbase::popchar(species_list = spec_names) |>
     dplyr::select(
-      "Species", "SpecCode", "Sex", "SourceRef",
+      "SpecCode", "Sex", "SourceRef",
       "Wmax", "Lmax", "tmax", "Locality", "C_Code"
     ) |>
     dplyr::mutate(
@@ -41,7 +41,7 @@ get_fishbase_traits <- function(spec_names = NULL) {
 
   lw <- rfishbase::poplw(species_list = spec_names) |>
     dplyr::select(
-      "Species", "SpecCode", "StockCode",
+      "SpecCode", "StockCode",
       "LengthMax", "Type", "Number", "Sex",
       "a", "b", "SEa", "SEb", "SDa", "SDb",
       "Locality", "C_Code", "Number"
@@ -52,7 +52,7 @@ get_fishbase_traits <- function(spec_names = NULL) {
 
   mat <- rfishbase::maturity(species_list = spec_names) |>
     dplyr::select(
-      "Species", "SpecCode", "StockCode", "Sex",
+      "SpecCode", "StockCode", "Sex",
       "Locality", "AgeMatRef", "tm", "Number",
       "SE_tm", "SD_tm", "Lm", "SD_Lm", "SE_Lm",
       "C_Code", "E_CODE"
@@ -65,7 +65,7 @@ get_fishbase_traits <- function(spec_names = NULL) {
 
   fecund <- rfishbase::fecundity(species_list = spec_names) |>
     dplyr::select(
-      "Species", "SpecCode", "StockCode", "Locality",
+      "SpecCode", "StockCode", "Locality",
       "FecundityMin", "FecundityMax", "FecundityMean",
       "FecundityType", "Number", "a", "b",
       "SEa", "SEb", "SDa", "SDb", "C_Code", "E_CODE"
@@ -138,6 +138,13 @@ get_fishbase_traits <- function(spec_names = NULL) {
     ) |>
     dplyr::tibble()
 
+  # Species isn't pulled in above, because the queries fail when spec_names = NULL
+  # This way, we join in the common name from the FishBase species table
+  species_info <- rfishbase::species() |>
+    dplyr::select(SpecCode, FBname) |>
+    dplyr::rename(Species = FBname)
+  traits <- dplyr::left_join(traits, species_info, by = "SpecCode")
+  
   return(traits)
 }
 
