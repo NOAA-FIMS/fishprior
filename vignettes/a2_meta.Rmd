@@ -108,10 +108,8 @@ filtered_traits$study_id <- seq_len(nrow(filtered_traits))
 filtered_traits$log_n <- log(filtered_traits$value)
 
 formula <- bf(
-  log_n ~ theta,
-  theta ~ 1 + (1 | study_id),
-  sigma ~ 0 + sqrt_n,
-  nl = TRUE
+  log_n ~ 1,
+  sigma ~ 0 + sqrt_n
 )
 
 fit <- brm(
@@ -119,7 +117,8 @@ fit <- brm(
   data = filtered_traits,
   family = gaussian(),
   chains = 4,
-  iter = 5000
+  iter = 5000,
+  control = list(adapt_delta = 0.999)
 )
 ```
 
@@ -162,6 +161,7 @@ An advantage of this approach is that it takes advantages of brms' existing mach
 
 ```{r warning=FALSE, message=FALSE, echo=TRUE, eval=FALSE}
 ak_traits$study <- seq_len(nrow(ak_traits))
-fit <- brm(value | se(SE) ~ 1 + (1 | study), data = ak_traits)
+fit <- brm(value | se(SE) ~ 1 + (1 | study), data = ak_traits,
+control = list(adapt_delta = 0.999))
 ```
 
