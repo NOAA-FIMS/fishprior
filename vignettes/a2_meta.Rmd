@@ -164,21 +164,69 @@ ak_traits <- dplyr::filter(
 )
 ```
 
-The model here can be written as 
+We consider three meta-analytic models of increasing complexity, each building on the 
+previous by relaxing assumptions about the sources of variance in the data.
 
-$$y_i \sim Normal(\theta_i, \text{SE}_i)$$ where
-and 
-$$\theta_i \sim Normal(\mu, \tau)$$
+### Model 1: Known standard errors only
 
-where the major contrast to above is not assuming a population level $\sigma$, and instead providing the standard error value directly. 
+The simplest meta-analytic model treats the reported standard errors as fully 
+characterizing observation-level uncertainty, with no additional residual variance:
 
-An advantage of this approach is that it takes advantages of brms' existing machinery for doing meta-analyses and using the `SE` directly in the `se()` function
+$$y_i \sim Normal(\mu, \text{SE}_i)$$
 
-```{r warning=FALSE, message=FALSE, echo=TRUE, eval=FALSE}
-ak_traits$study <- seq_len(nrow(ak_traits))
-fit <- brm(value | se(SE) ~ 1 + (1 | study),
+where $y_i$ is the observed trait value for study $i$, $\mu$ is the pooled mean (the single parameter being estimated), and $\text{SE}_i$ is the known standard error from FishBase, treated as fixed. This is the  classical fixed-effects meta-analytic assumption — the SE accounts for all variance and there is no additional unexplained noise.
+
+```{r model1, warning=FALSE, message=FALSE, echo=TRUE, eval=FALSE}
+fit1 <- brm(
+  value | se(SE) ~ 1,
   data = ak_traits,
+  prior = prior(normal(0, 10), class = Intercept),
+  chains = 4, iter = 2000,
   control = list(adapt_delta = 0.999)
 )
 ```
 
+### Model 2: Known standard errors with residual variance
+
+In practice, the reported SE may not capture all sources of variation. Model 2 relaxes the assumption that SE fully characterizes observation uncertainty by additionally estimating a residual variance $\sigma$:
+
+$$y_i \sim Normal(\mu, \sqrt{\text{SE}_i^2 + \sigma^2})$$
+
+This model has 2 parameters being estimated, $\mu$ and $\sigma$). This is specified in brms using `sigma = TRUE` within the `se()` function:
+
+```{r model2, warning=FALSE, message=FALSE, echo=TRUE, eval=FALSE}
+fit2 <- brm(
+  value | se(SE, sigma = TRUE) ~ 1,
+  data = ak_traits,
+  prior = c(
+    prior(normal(0, 10), class = Intercept),
+    prior(exponential(1), class = sigma)
+  ),
+  chains = 4, iter = 2000,
+  control = list(adapt_delta = 0.999)
+)
+```
+
+### Model 3: Known standard errors with residual variance and random effects
+
+Model 3 is the most general formulation, adding a study-level random effect $\delta_i$ to capture among-study variation beyond what is explained by the known SE and residual variance:
+
+$$y_i \sim Normal(\mu + \delta_i, \sqrt{\text{SE}_i^2 + \sigma^2})$$
+$$\delta_i \sim Normal(0, \tau)$$
+
+where $\tau$ is the standard deviation of study-level random effects, representing among-study heterogeneity. This is the most flexible model but also has the most 
+parameters estimated — with only a small number of studies, $\tau$ and $\sigma$ may be difficult to distinguish and estimates may be sensitive to priors.
+
+```{r model3, warning=FALSE, message=FALSE, echo=TRUE, eval=FALSE}
+fit3 <- brm(
+  value | se(SE, sigma = TRUE) ~ 1 + (1 | study),
+  data = ak_traits,
+  prior = c(
+    prior(normal(0, 10), class = Intercept),
+    prior(exponential(1), class = sigma),
+    prior(exponential(1), class = sd)
+  ),
+  chains = 4, iter = 2000,
+  control = list(adapt_delta = 0.999)
+)
+```
