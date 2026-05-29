@@ -33,7 +33,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="index.html">fishprior</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.0.1.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.0.2.0</span>
       </span>
     </div>
 
@@ -50,10 +50,10 @@
   </a>
   <ul class="dropdown-menu" role="menu">
 <li>
-      <a href="articles/demo.html">Demonstration of the fishprior R package</a>
+      <a href="articles/a1_demo.html">Demonstration of the fishprior R package</a>
     </li>
     <li>
-      <a href="articles/meta.html">Meta-analyses with the fishprior R package</a>
+      <a href="articles/a2_meta.html">Meta-analyses with the fishprior R package</a>
     </li>
   </ul>
 </li>
@@ -80,7 +80,36 @@
 <div class="section level1">
 <div class="page-header"><h1 id="fishprior">fishprior<a class="anchor" aria-label="anchor" href="#fishprior"></a>
 </h1></div>
-<p>An R package to generate priors for models that assess the status of marine resources</p>
+<div class="section level3">
+<h3 id="background">Background<a class="anchor" aria-label="anchor" href="#background"></a>
+</h3>
+<p>The fishprior R package provides a streamlined workflow for constructing Bayesian prior distributions for fish life-history parameters, using FishBase (and <code>rfishbase</code>). The package is structured around three steps: data retrieval, trait summarization, and prior construction.</p>
+<p>Raw life-history data are queried from FishBase using the <code><a href="reference/get_fishbase_traits.html">get_fishbase_traits()</a></code> function. For a given vector of species names, the function retrieves five separate data tables from FishBase: von Bertalanffy growth parameters (popgrowth), population characteristics including maximum length and age (popchar), length-weight relationships (poplw), maturity schedules (maturity), and fecundity estimates (fecundity) and combines them into a single tidy long-format tibble. Each row in the resulting table corresponds to a single observation. Standard errors and sample sizes are provided for individual studies, and the reporting of this information varies by trait type.</p>
+<p>For prior construction, raw data from FishBase needs to be aggregated into a form that is useful for prior construction. The <code><a href="reference/summarize_fishbase_traits.html">summarize_fishbase_traits()</a></code> function aggregates raw trait data at the species level for eight life-history parameters commonly encountered in fish stock assessments: asymptotic length (L∞), the von Bertalanffy growth coefficient (k), natural mortality (M), maximum length (Lmax), maximum age (tmax), length at maturity (Lm), age at maturity (tm), and mean fecundity. For each species–trait combination, the function returns both arithmetic and log-scale summary statistics (mean and standard deviation), with the log-scale summaries computed after excluding non-positive values.</p>
+<p>The fishprior package constructs priors using a custom S4 class, which stores the distributional family, parameter values, trait name, prior type (informative or diffuse), grouping variable (typically species), and the underlying data. Two families of prior are currently supported: normal and lognormal, though future development will add a wider range of distributions.</p>
+</div>
+<div class="section level3">
+<h3 id="installation-instructions">Installation instructions<a class="anchor" aria-label="anchor" href="#installation-instructions"></a>
+</h3>
+<p>The <code>fishprior</code> package can be installed via <code>remotes</code>, <code>devtools</code>, <code>pak</code>, or similar packages. The general syntax is</p>
+<div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu">pak</span><span class="fu">::</span><span class="fu"><a href="https://pak.r-lib.org/reference/pak.html" class="external-link">pak</a></span><span class="op">(</span><span class="st">"NOAA-FIMS/fishprior"</span><span class="op">)</span></span></code></pre></div>
+</div>
+<div class="section level3">
+<h3 id="documentation-and-examples">Documentation and Examples<a class="anchor" aria-label="anchor" href="#documentation-and-examples"></a>
+</h3>
+<p>The <code>pkgdown</code> generated documentation for the package is <a href="https://noaa-fims.github.io/fishprior/" class="external-link uri">https://noaa-fims.github.io/fishprior/</a>. This includes<br>
+- <a href="https://noaa-fims.github.io/fishprior/articles/demo.html" class="external-link">a basic demonstation of the package</a><br>
+- <a href="https://noaa-fims.github.io/fishprior/articles/meta.html" class="external-link">example workflow of a meta-analysis</a></p>
+<p>A simple dataset called <code>traits_example</code> is included as data with the package, and is referenced in the first vignette. This includes summarized traits for three species: <em>Anoplopoma fimbria, Gadus chalcogrammus</em>, and <em>Merluccius merluccius</em>.</p>
+<p>Basic testing of querying <code>rfishbase</code> is included in the ‘tests’ folder.</p>
+</div>
+<div class="section level2">
+<h2 id="noaa-disclaimer">NOAA Disclaimer<a class="anchor" aria-label="anchor" href="#noaa-disclaimer"></a>
+</h2>
+<p>This repository is a scientific product and is not official communication of the National Oceanic and Atmospheric Administration, or the United States Department of Commerce. All NOAA GitHub project code is provided on an ‘as is’ basis and the user assumes responsibility for its use. Any claims against the Department of Commerce or Department of Commerce bureaus stemming from the use of this GitHub project will be governed by all applicable Federal law. Any reference to specific commercial products, processes, or services by service mark, trademark, manufacturer, or otherwise, does not constitute or imply their endorsement, recommendation or favoring by the Department of Commerce. The Department of Commerce seal and logo, or the seal and logo of a DOC bureau, shall not be used in any manner to imply endorsement of any commercial product or activity by DOC or the United States Government.</p>
+<p>Software code created by U.S. Government employees is not subject to copyright in the United States (17 U.S.C. section 105). The United States/Department of Commerce reserve all rights to seek and obtain copyright protection in countries other than the United States for Software authored in its entirety by the Department of Commerce. To this end, the Department of Commerce hereby grants to Recipient a royalty-free, nonexclusive license to use, copy, and create derivative works of the Software outside of the United States.</p>
+</div>
 </div>
   </div>
 
@@ -131,7 +160,7 @@
 
 <div class="pkgdown">
   <p></p>
-<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.1.3.</p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.2.0.</p>
 </div>
 
       </footer>

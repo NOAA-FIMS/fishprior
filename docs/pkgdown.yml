@@ -1,7 +1,7 @@
 pandoc: '3.4'
-pkgdown: 2.1.3
+pkgdown: 2.2.0
 pkgdown_sha: ~
 articles:
-  demo: demo.html
-  meta: meta.html
-last_built: 2025-11-17T18:21Z
+  a1_demo: a1_demo.html
+  a2_meta: a2_meta.html
+last_built: 2026-05-29T21:31Z

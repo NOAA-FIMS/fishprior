@@ -4,9 +4,9 @@
 
 The fishprior R package provides a streamlined workflow for constructing Bayesian prior distributions for fish life-history parameters, using FishBase (and `rfishbase`). The package is structured around three steps: data retrieval, trait summarization, and prior construction.
 
-Raw life-history data are queried from FishBase using the `get_fishbase_traits()` function. For a given vector of species names, the function retrieves five separate data tables from FishBase: von Bertalanffy growth parameters (popgrowth), population characteristics including maximum length and age (popchar), length-weight relationships (poplw), maturity schedules (maturity), and fecundity estimates (fecundity) and combines them into a single tidy long-format tibble. Each row in the resulting table corresponds to a single observation. Standard errors and sample sizes are provided for individual studies, and the reporting of this information varies by trait type. 
+Raw life-history data are queried from FishBase using the `get_fishbase_traits()` function. For a given vector of species names, the function retrieves five separate data tables from FishBase: von Bertalanffy growth parameters (popgrowth), population characteristics including maximum length and age (popchar), length-weight relationships (poplw), maturity schedules (maturity), and fecundity estimates (fecundity) and combines them into a single tidy long-format tibble. Each row in the resulting table corresponds to a single observation. Standard errors and sample sizes are provided for individual studies, and the reporting of this information varies by trait type.
 
-For prior construction, raw data from FishBase needs to be aggregated into a form that is useful for prior construction. The `summarize_fishbase_traits()` function aggregates raw trait data at the species level for eight life-history parameters commonly encountered in fish stock assessments: asymptotic length (L∞), the von Bertalanffy growth coefficient (k), natural mortality (M), maximum length (Lmax), maximum age (tmax), length at maturity (Lm), age at maturity (tm), and mean fecundity. For each species–trait combination, the function returns both arithmetic and log-scale summary statistics (mean and standard deviation), with the log-scale summaries computed after excluding non-positive values. 
+For prior construction, raw data from FishBase needs to be aggregated into a form that is useful for prior construction. The `summarize_fishbase_traits()` function aggregates raw trait data at the species level for eight life-history parameters commonly encountered in fish stock assessments: asymptotic length (L∞), the von Bertalanffy growth coefficient (k), natural mortality (M), maximum length (Lmax), maximum age (tmax), length at maturity (Lm), age at maturity (tm), and mean fecundity. For each species–trait combination, the function returns both arithmetic and log-scale summary statistics (mean and standard deviation), with the log-scale summaries computed after excluding non-positive values.
 
 The fishprior package constructs priors using a custom S4 class, which stores the distributional family, parameter values, trait name, prior type (informative or diffuse), grouping variable (typically species), and the underlying data. Two families of prior are currently supported: normal and lognormal, though future development will add a wider range of distributions.
 
@@ -14,15 +14,19 @@ The fishprior package constructs priors using a custom S4 class, which stores th
 
 The `fishprior` package can be installed via `remotes`, `devtools`, `pak`, or similar packages. The general syntax is
 
-```r
+``` r
 pak::pak("NOAA-FIMS/fishprior")
 ```
 
 ### Documentation and Examples
 
-The `pkgdown` generated documentation for the package is [https://noaa-fims.github.io/fishprior/](https://noaa-fims.github.io/fishprior/). This includes 
-- [a basic demonstation of the package](https://noaa-fims.github.io/fishprior/articles/demo.html)
+The `pkgdown` generated documentation for the package is <https://noaa-fims.github.io/fishprior/>. This includes\
+- [a basic demonstation of the package](https://noaa-fims.github.io/fishprior/articles/demo.html)\
 - [example workflow of a meta-analysis](https://noaa-fims.github.io/fishprior/articles/meta.html)
+
+A simple dataset called `traits_example` is included as data with the package, and is referenced in the first vignette. This includes summarized traits for three species: *Anoplopoma fimbria, Gadus chalcogrammus*, and *Merluccius merluccius*.
+
+Basic testing of querying `rfishbase` is included in the 'tests' folder.
 
 ## NOAA Disclaimer
 
