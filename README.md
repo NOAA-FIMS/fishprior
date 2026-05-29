@@ -1,5 +1,8 @@
 # fishprior
-An R package to generate priors for models that assess the status of marine resources
+
+### Background
+
+The fishprior R package provides a streamlined workflow for constructing Bayesian prior distributions for fish life-history parameters, using FishBase (and `rfishbase`). The package is structured around three steps: data retrieval, trait summarization, and prior construction.
 
 ## NOAA Disclaimer
 
