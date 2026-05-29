@@ -22,6 +22,7 @@ pak::pak("NOAA-FIMS/fishprior")
 
 The `pkgdown` generated documentation for the package is [https://noaa-fims.github.io/fishprior/](https://noaa-fims.github.io/fishprior/). This includes 
 - [a basic demonstation of the package](https://noaa-fims.github.io/fishprior/articles/demo.html)
+- [example workflow of a meta-analysis](https://noaa-fims.github.io/fishprior/articles/meta.html)
 
 ## NOAA Disclaimer
 
