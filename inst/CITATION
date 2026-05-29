@@ -1,0 +1,17 @@
+bibentry(
+  bibtype = "Manual",
+  title = "fishprior: Get Priors for Life-History Traits of Fishes",
+  author = c(
+    person(c("Kelli", "F."), "Johnson"),
+    person(c("Jennifer", "S."), "Bigman"),
+    person(c("Eric", "J."), "Ward")
+  ),
+  year = "2026", # Update this to your current release year
+  note = "R package version 0.0.2.0",
+  url = "https://github.com/noaa-fims/fishprior",
+  textVersion = paste0(
+    "Johnson, K. F., Bigman, J. S., & Ward, E. J. (2026). ",
+    "fishprior: Get Priors for Life-History Traits of Fishes. ",
+    "R package version 0.0.2.0. Available at https://github.com/noaa-fims/fishprior"
+  )
+)
