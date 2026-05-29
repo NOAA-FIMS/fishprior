@@ -10,6 +10,13 @@ For prior construction, raw data from FishBase needs to be aggregated into a for
 
 The fishprior package constructs priors using a custom S4 class, which stores the distributional family, parameter values, trait name, prior type (informative or diffuse), grouping variable (typically species), and the underlying data. Two families of prior are currently supported: normal and lognormal, though future development will add a wider range of distributions.
 
+### Installation instructions
+
+The `fishprior` package can be installed via `remotes`, `devtools`, `pak`, or similar packages. The general syntax is
+
+```r
+pak::pak("NOAA-FIMS/fishprior")
+```
 
 ## NOAA Disclaimer
 
