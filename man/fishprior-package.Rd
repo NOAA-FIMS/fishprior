@@ -22,7 +22,6 @@ Useful links:
 
 Authors:
 \itemize{
-  \item Kelli F. Johnson \email{kelli.johnson@noaa.gov} (\href{https://orcid.org/0000-0002-5149-451X}{ORCID})
   \item Jennifer S. Bigman, (\href{https://orcid.org/0000-0001-8070-3061}{ORCID})
   \item Eric J. Ward (\href{https://orcid.org/0000-0002-4359-0296}{ORCID})
 }

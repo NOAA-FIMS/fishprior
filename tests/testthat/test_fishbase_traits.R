@@ -1,6 +1,3 @@
-# get_fishbase_traits ----
-## Setup ----
-# Load or prepare any necessary data for testing
 
 ## IO correctness ----
 test_that("get_fishbase_traits() works with correct inputs", {
