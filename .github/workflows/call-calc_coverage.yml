@@ -1,5 +1,6 @@
-# Runs covr::package_coverage() to calculate code coverage and uploads to Codecov.
+# Runs covr::codecov() to calculate code coverage.
 name: call-calc_coverage
+
 on:
   pull_request:
     branches:
@@ -14,45 +15,22 @@ on:
       - 'LICENSE'
       - 'man'
       - 'README.md'
+  push:
+    branches:
+      - dev
+    paths-ignore:
+      - .devcontainer
+      - .github
+      - '.gitignore'
+      - '.Rbuildignore'
+      - 'CONTRIBUTING.md'
+      - 'LICENSE'
+      - 'man'
+      - 'README.md'
   workflow_dispatch:
-# Cancel active CI runs for a PR before starting another run
-concurrency:
-  group: ${{ github.workflow }}-${{ github.ref }}
-  cancel-in-progress: true
+ 
 jobs:
-  calc-coverage:
-    runs-on: ubuntu-latest
-    env:
-      GITHUB_PAT: ${{ secrets.GITHUB_TOKEN }}
-      FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
-    steps:
-      - uses: actions/checkout@v5
-
-      - uses: r-lib/actions/setup-r@v2
-        with:
-          use-public-rspm: true
-
-      - uses: r-lib/actions/setup-r-dependencies@v2
-        with:
-          extra-packages: any::covr, any::xml2
-          needs: coverage
-
-      - name: Calculate coverage
-        run: |
-          cov <- covr::package_coverage(
-            quiet = FALSE,
-            clean = FALSE,
-            install_path = file.path(
-              normalizePath(Sys.getenv("RUNNER_TEMP"), winslash = "/"),
-              "package"
-            )
-          )
-          covr::to_cobertura(cov)
-        shell: Rscript {0}
-
-      - name: Upload coverage to Codecov
-        uses: codecov/codecov-action@v5
-        with:
-          token: ${{ secrets.CODECOV_TOKEN }}
-          files: ./cobertura.xml
-          fail_ci_if_error: true
+  call-workflow:
+    uses: nmfs-ost/ghactions4r/.github/workflows/calc-coverage.yml@main
+    secrets:
+      CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
