@@ -1,6 +1,6 @@
 Package: fishprior
 Title: Get Priors for Life-History Traits of Fishes
-Version: 0.0.2.0
+Version: 0.1.0.0
 Authors@R: c(
     person(c("Kelli", "F."), "Johnson", , "kelli.johnson@noaa.gov", role = c("aut", "cre"),
            comment = c(ORCID = "0000-0002-5149-451X")),
@@ -32,6 +32,7 @@ Imports:
     tidyr
 Suggests:
     knitr,
+    mockery,
     purrr,
     rmarkdown,
     testthat (>= 3.0.0),
@@ -45,3 +46,4 @@ Language: en-US
 LazyData: true
 Roxygen: list(markdown = TRUE)
 Config/roxygen2/version: 8.0.0
+RoxygenNote: 7.3.3

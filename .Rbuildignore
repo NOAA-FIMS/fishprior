@@ -9,3 +9,4 @@
 CONTRIBUTING.md
 ^_pkgdown\.yml$
 ^pkgdown$
+^docs$

@@ -1,6 +1,10 @@
-# fishprior
-
-### Background
+  <!-- badges: start -->
+  [![R-CMD-check](https://github.com/noaa-fims/fishprior/actions/workflows/call-r-cmd-check.yml/badge.svg)](https://github.com/noaa-fims/fishprior/actions/workflows/call-r-cmd-check.yml)
+  [![Codecov test coverage](https://codecov.io/gh/NOAA-FIMS/fishprior/branch/main/graph/badge.svg)](https://app.codecov.io/gh/NOAA-FIMS/fishprior?branch=main)
+  [![Lifecycle: experimental](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://lifecycle.r-lib.org/articles/stages.html#experimental)
+  <!-- badges: end -->
+  
+### Overview
 
 The fishprior R package provides a streamlined workflow for constructing Bayesian prior distributions for fish life-history parameters, using FishBase (and `rfishbase`). The package is structured around three steps: data retrieval, trait summarization, and prior construction.
 

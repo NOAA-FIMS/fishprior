@@ -35,16 +35,8 @@ make_growth_coefficient_prior <- function(
   }
   x <- dplyr::filter(data, trait == "log(growth_coefficient)")
 
-  parameters <- dplyr::case_when(
-    type == "informative" ~ list(
-      mean = x[["mean_normal"]],
-      sd = x[["sd_normal"]]
-    )
-  )
-  if (parameters[[1]] == "error") {
-    cli::cli_abort(c(
-      "No {.var {type}} prior available for the growth coefficient"
-    ))
+  parameters <- if (type == "informative") {
+    list(mean = x[["mean_normal"]], sd = x[["sd_normal"]])
   }
 
   # Return an object of class `prior`
