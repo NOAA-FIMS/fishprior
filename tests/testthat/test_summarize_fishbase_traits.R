@@ -6,7 +6,7 @@
 make_fb_data <- function() {
   tibble::tibble(
     Species = c(
-      rep("Gadus morhua",      6),
+      rep("Gadus morhua", 6),
       rep("Anoplopoma fimbria", 4)
     ),
     trait = c(
@@ -17,14 +17,14 @@ make_fb_data <- function() {
     ),
     value = c(
       # Gadus
-      120, 115,           # Loo
-      0.20, 0.23,         # K
-      0.30, 0.28,         # M
+      120, 115, # Loo
+      0.20, 0.23, # K
+      0.30, 0.28, # M
       # Anoplopoma
-      90,                 # Loo
-      0.10,               # K
-      80,                 # tmax
-      500000             # FecundityMean
+      90, # Loo
+      0.10, # K
+      80, # tmax
+      500000 # FecundityMean
     )
   )
 }
@@ -37,16 +37,18 @@ test_that("summarize_fishbase_traits() returns a data frame", {
 test_that("summarize_fishbase_traits() has the expected columns", {
   result <- summarize_fishbase_traits(make_fb_data())
   expect_true(all(c("Species", "trait", "mean_normal", "sd_normal", "mean", "sd")
-                  %in% colnames(result)))
+  %in% colnames(result)))
 })
 
 test_that("summarize_fishbase_traits() has one row per Species-trait combination", {
-  data   <- make_fb_data()
+  data <- make_fb_data()
   result <- summarize_fishbase_traits(data)
 
   expected_rows <- data |>
-    dplyr::filter(trait %in% c("Loo", "K", "M", "Lmax", "tmax", "Lm", "tm",
-                                "FecundityMean")) |>
+    dplyr::filter(trait %in% c(
+      "Loo", "K", "M", "Lmax", "tmax", "Lm", "tm",
+      "FecundityMean"
+    )) |>
     dplyr::distinct(Species, trait) |>
     nrow()
 
@@ -55,8 +57,10 @@ test_that("summarize_fishbase_traits() has one row per Species-trait combination
 
 test_that("summarize_fishbase_traits() only keeps the eight supported traits", {
   # Add a trait that should be dropped
-  data <- tibble::add_row(make_fb_data(), Species = "Gadus morhua",
-                           trait = "Winfinity", value = 20000)
+  data <- tibble::add_row(make_fb_data(),
+    Species = "Gadus morhua",
+    trait = "Winfinity", value = 20000
+  )
 
   result <- summarize_fishbase_traits(data)
   supported <- c(
@@ -94,15 +98,15 @@ test_that("summarize_fishbase_traits() computes log-scale sd correctly", {
 
 test_that("summarize_fishbase_traits() computes normal-scale mean and sd correctly", {
   values <- c(100, 110, 120)
-  data   <- tibble::tibble(
+  data <- tibble::tibble(
     Species = rep("TestSpecies", 3),
     trait   = rep("Loo", 3),
     value   = values
   )
   result <- summarize_fishbase_traits(data)
 
-  expect_equal(result[["mean_normal"]], mean(values),   tolerance = 1e-10)
-  expect_equal(result[["sd_normal"]],   sd(values),     tolerance = 1e-10)
+  expect_equal(result[["mean_normal"]], mean(values), tolerance = 1e-10)
+  expect_equal(result[["sd_normal"]], sd(values), tolerance = 1e-10)
 })
 
 test_that("summarize_fishbase_traits() translates trait names to log-scale snake_case", {
@@ -113,8 +117,8 @@ test_that("summarize_fishbase_traits() translates trait names to log-scale snake
   )
   result <- summarize_fishbase_traits(data)
 
-  expect_true("log(natural_mortality)"  %in% result[["trait"]])
-  expect_true("log(length_infinity)"   %in% result[["trait"]])
+  expect_true("log(natural_mortality)" %in% result[["trait"]])
+  expect_true("log(length_infinity)" %in% result[["trait"]])
 })
 
 test_that("summarize_fishbase_traits() handles a single observation per trait", {

@@ -1,4 +1,3 @@
-
 ## IO correctness ----
 test_that("get_fishbase_traits() works with correct inputs", {
   traits <- get_fishbase_traits(spec_names = "Gadus morhua")
@@ -78,7 +77,7 @@ mock_popchar <- function(...) {
     Sex       = "Female",
     SourceRef = 301L,
     Wmax      = 20000.0,
-    Lmax      = "130",     # rfishbase returns Lmax as character
+    Lmax      = "130", # rfishbase returns Lmax as character
     tmax      = 25.0,
     Locality  = "North Sea",
     C_Code    = "826"
@@ -107,7 +106,7 @@ mock_poplw <- function(...) {
 mock_maturity <- function(...) {
   tibble::tibble(
     SpecCode  = 1L,
-    StockCode = "1",       # rfishbase returns StockCode as character
+    StockCode = "1", # rfishbase returns StockCode as character
     Sex       = "Female",
     Locality  = "North Sea",
     AgeMatRef = 401L,
@@ -128,7 +127,7 @@ mock_fecundity <- function(...) {
     SpecCode      = 1L,
     StockCode     = 1L,
     Locality      = "North Sea",
-    FecundityMin  = "100000",   # rfishbase returns these as character
+    FecundityMin  = "100000", # rfishbase returns these as character
     FecundityMax  = "500000",
     FecundityMean = "300000",
     FecundityType = "batch",
@@ -176,7 +175,7 @@ setup_fishbase_mocks <- function() {
   )
 }
 
-# get_fishbase_traits() 
+# get_fishbase_traits()
 test_that("get_fishbase_traits() returns a tibble", {
   setup_fishbase_mocks()
   result <- get_fishbase_traits("Gadus morhua")
@@ -188,7 +187,7 @@ test_that("get_fishbase_traits() contains the rfishbase source column", {
   result <- get_fishbase_traits("Gadus morhua")
   expect_true("rfishbase" %in% colnames(result))
   expect_true(all(result[["rfishbase"]] %in%
-                    c("popgrowth", "popchar", "poplw", "maturity", "fecundity")))
+    c("popgrowth", "popchar", "poplw", "maturity", "fecundity")))
 })
 
 test_that("get_fishbase_traits() contains a trait column with known traits", {
