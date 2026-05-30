@@ -1,0 +1,22 @@
+# Updates the existing pkgdown site for a repository by deploying the changes
+# made to the pkgdown site to a branch called gh-pages.
+name: call-update-pkgdown
+on:
+  pull_request:
+    branches:
+      - main
+      - dev
+  push:
+    branches:
+      - main
+      - dev
+  workflow_dispatch:
+  repository_dispatch:
+    types: [file-updated]
+jobs:
+  call-workflow:
+    uses: ./.github/workflows/build-pkgdown.yml
+    with:
+      build_testdown: ${{ github.event_name == 'push' && github.ref == 'refs/heads/main' }}
+      build_code_coverage: false
+      is_main_push: ${{ github.event_name == 'push' && github.ref == 'refs/heads/main' }}

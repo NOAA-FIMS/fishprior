@@ -140,8 +140,8 @@ get_fishbase_traits <- function(spec_names = NULL) {
   # Species isn't pulled in above, because the queries fail when spec_names = NULL
   # This way, we join in the common name from the FishBase species table
   species_info <- rfishbase::species() |>
-    dplyr::select(SpecCode, FBname) |>
-    dplyr::rename(Species = FBname)
+    dplyr::select("SpecCode", "FBname") |>
+    dplyr::rename(Species = "FBname")
   traits <- dplyr::left_join(traits, species_info, by = "SpecCode")
 
   return(traits)

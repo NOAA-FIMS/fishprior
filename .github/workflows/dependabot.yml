@@ -1,0 +1,15 @@
+version: 2
+updates:
+  - package-ecosystem: "github-actions"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+      day: "monday"
+    groups:
+      r-lib-actions:
+        patterns:
+          - "r-lib/actions*"
+      github-actions:
+        patterns:
+          - "actions/*"
+          - "peaceiris/*"
