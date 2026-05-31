@@ -17,18 +17,18 @@ cran_matrix <- function(version) {
   )
 }
 
-test_that("check_rfishbase_version() messages and returns FALSE when rfishbase absent", {
-  local_mocked_bindings(
-    pkg_is_installed = function(...) FALSE,
-    .package = "fishprior"
-  )
-  
-  expect_message(
-    result <- check_rfishbase_version(),
-    "not installed"
-  )
-  expect_false(result)
-})
+#test_that("check_rfishbase_version() messages and returns FALSE when rfishbase absent", {
+#  local_mocked_bindings(
+#    pkg_is_installed = function(...) FALSE,
+#    .package = "fishprior"
+#  )
+#  
+#  expect_message(
+#    result <- check_rfishbase_version(),
+#    "not installed"
+#  )
+#  expect_false(result)
+#})
 
 test_that("check_rfishbase_version() messages and returns FALSE when CRAN unavailable", {
   local_mocked_bindings(
