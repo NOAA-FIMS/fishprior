@@ -3,15 +3,15 @@
 # trait == "log(growth_coefficient)", which is the translated name produced by
 # translate_trait_names("K").
 make_growth_data <- function(name = "Gadus morhua",
-                              mean_normal = 0.20,
-                              sd_normal   = 0.05) {
+                             mean_normal = 0.20,
+                             sd_normal = 0.05) {
   data.frame(
-    name        = name,
-    trait       = "log(growth_coefficient)",
+    name = name,
+    trait = "log(growth_coefficient)",
     mean_normal = mean_normal,
-    sd_normal   = sd_normal,
-    mean        = log(mean_normal),
-    sd          = 0.10,
+    sd_normal = sd_normal,
+    mean = log(mean_normal),
+    sd = 0.10,
     stringsAsFactors = FALSE
   )
 }
@@ -74,17 +74,17 @@ test_that("make_growth_coefficient_prior() sets group from data name column", {
 })
 
 test_that("make_growth_coefficient_prior() stores mean and sd from data", {
-  data   <- make_growth_data(mean_normal = 0.20, sd_normal = 0.05)
-  p      <- make_growth_coefficient_prior(data)
+  data <- make_growth_data(mean_normal = 0.20, sd_normal = 0.05)
+  p <- make_growth_coefficient_prior(data)
   params <- get_parameters(p)
 
   expect_equal(params[["mean"]], 0.20)
-  expect_equal(params[["sd"]],   0.05)
+  expect_equal(params[["sd"]], 0.05)
 })
 
 test_that("make_growth_coefficient_prior() stores the filtered data in the prior", {
   data <- make_growth_data()
-  p    <- make_growth_coefficient_prior(data)
+  p <- make_growth_coefficient_prior(data)
 
   expect_s3_class(get_data(p), "data.frame")
   expect_true(nrow(get_data(p)) >= 1)

@@ -1,9 +1,9 @@
-
 make_test_prior <- function(
-    distribution = "lognormal",
-    trait        = "natural_mortality",
-    type         = "informative",
-    group        = "Gadus morhua") {
+  distribution = "lognormal",
+  trait = "natural_mortality",
+  type = "informative",
+  group = "Gadus morhua"
+) {
   methods::new(
     "prior",
     distribution = distribution,
@@ -32,7 +32,7 @@ test_that("print() prints without error", {
 
 test_that("get_distribution() returns the distribution slot", {
   expect_equal(get_distribution(make_test_prior("lognormal")), "lognormal")
-  expect_equal(get_distribution(make_test_prior("normal")),    "normal")
+  expect_equal(get_distribution(make_test_prior("normal")), "normal")
 })
 
 test_that("get_parameters() returns the parameters list", {
@@ -40,7 +40,7 @@ test_that("get_parameters() returns the parameters list", {
   expect_type(params, "list")
   expect_named(params, c("mean", "sd"))
   expect_equal(params[["mean"]], -1.5)
-  expect_equal(params[["sd"]],   0.31)
+  expect_equal(params[["sd"]], 0.31)
 })
 
 test_that("get_trait() returns the trait slot", {
@@ -55,7 +55,7 @@ test_that("get_group() returns the group slot", {
 
 test_that("get_type() returns the type slot", {
   expect_equal(get_type(make_test_prior(type = "informative")), "informative")
-  expect_equal(get_type(make_test_prior(type = "diffuse")),     "diffuse")
+  expect_equal(get_type(make_test_prior(type = "diffuse")), "diffuse")
 })
 
 test_that("get_data() returns a data.frame", {
@@ -63,8 +63,10 @@ test_that("get_data() returns a data.frame", {
 })
 
 test_that("evaluate() returns a tibble with the correct shape for normal", {
-  p      <- make_test_prior(distribution = "normal", group = "TestGroup",
-                             trait = "growth_coefficient")
+  p <- make_test_prior(
+    distribution = "normal", group = "TestGroup",
+    trait = "growth_coefficient"
+  )
   result <- evaluate(p, n = 200)
 
   expect_s3_class(result, "data.frame")
@@ -76,7 +78,7 @@ test_that("evaluate() returns a tibble with the correct shape for normal", {
 })
 
 test_that("evaluate() returns positive values for lognormal", {
-  p      <- make_test_prior(distribution = "lognormal")
+  p <- make_test_prior(distribution = "lognormal")
   result <- evaluate(p, n = 500)
 
   expect_equal(nrow(result), 500)
@@ -102,7 +104,7 @@ test_that("evaluate() errors informatively for an unsupported distribution", {
 })
 
 test_that("plot() returns a ggplot object without error", {
-  p      <- make_test_prior(distribution = "lognormal", trait = "natural_mortality")
+  p <- make_test_prior(distribution = "lognormal", trait = "natural_mortality")
   result <- plot(p)
   expect_s3_class(result, "ggplot")
 })

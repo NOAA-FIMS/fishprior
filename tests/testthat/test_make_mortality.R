@@ -29,21 +29,21 @@ test_that("make_informative_mortality_prior() returns a lognormal prior", {
 })
 
 test_that("make_informative_mortality_prior() uses Hamel-Cope formula", {
-  max_age    <- 25
-  p          <- make_informative_mortality_prior(log(max_age))
-  params     <- get_parameters(p)
+  max_age <- 25
+  p <- make_informative_mortality_prior(log(max_age))
+  params <- get_parameters(p)
 
-  expected_mean <- log(5.40 / max_age)   # = log(median M)
-  expected_sd   <- 0.31
+  expected_mean <- log(5.40 / max_age) # = log(median M)
+  expected_sd <- 0.31
 
   expect_equal(params[["mean_log"]], expected_mean, tolerance = 1e-10)
-  expect_equal(params[["sd_log"]],   expected_sd,   tolerance = 1e-10)
+  expect_equal(params[["sd_log"]], expected_sd, tolerance = 1e-10)
 })
 
 test_that("make_informative_mortality_prior() scales correctly with max age", {
   # Older fish → lower M
   p_young <- make_informative_mortality_prior(log(10))
-  p_old   <- make_informative_mortality_prior(log(50))
+  p_old <- make_informative_mortality_prior(log(50))
 
   expect_gt(
     get_parameters(p_young)[["mean_log"]],
@@ -74,11 +74,11 @@ test_that("make_diffuse_mortality_prior() returns a lognormal diffuse prior", {
 })
 
 test_that("make_diffuse_mortality_prior() stores supplied parameters", {
-  p      <- make_diffuse_mortality_prior(-1.5, 0.3)
+  p <- make_diffuse_mortality_prior(-1.5, 0.3)
   params <- get_parameters(p)
 
   expect_equal(params[["mean_log"]], -1.5)
-  expect_equal(params[["sd_log"]],    0.3)
+  expect_equal(params[["sd_log"]], 0.3)
 })
 
 test_that("make_diffuse_mortality_prior() sets trait to natural mortality", {
