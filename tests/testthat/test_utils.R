@@ -4,11 +4,10 @@
 #   3. installed version != CRAN version
 #   4. installed version == CRAN version
 #
-# pkg_is_installed() and available.packages() are both imported into the
-# fishprior namespace, so local_mocked_bindings() can replace them without
-# touching any locked base or utils namespace.
+# .package = "fishprior" is required on every local_mocked_bindings() call so
+# the replacement lands in the fishprior namespace, where
+# check_rfishbase_version() actually looks up its callees.
 
-# Helper: build a one-row matrix that available.packages() would return
 cran_matrix <- function(version) {
   matrix(
     version,
@@ -19,7 +18,10 @@ cran_matrix <- function(version) {
 }
 
 test_that("check_rfishbase_version() messages and returns FALSE when rfishbase absent", {
-  local_mocked_bindings(pkg_is_installed = function(...) FALSE)
+  local_mocked_bindings(
+    pkg_is_installed = function(...) FALSE,
+    .package = "fishprior"
+  )
   
   expect_message(
     result <- check_rfishbase_version(),
@@ -30,7 +32,8 @@ test_that("check_rfishbase_version() messages and returns FALSE when rfishbase a
 
 test_that("check_rfishbase_version() messages and returns FALSE when CRAN unavailable", {
   local_mocked_bindings(
-    available.packages = function(...) stop("no internet connection")
+    available.packages = function(...) stop("no internet connection"),
+    .package = "fishprior"
   )
   
   expect_message(
@@ -42,7 +45,8 @@ test_that("check_rfishbase_version() messages and returns FALSE when CRAN unavai
 
 test_that("check_rfishbase_version() messages and returns TRUE when versions differ", {
   local_mocked_bindings(
-    available.packages = function(...) cran_matrix("99.99.0")
+    available.packages = function(...) cran_matrix("99.99.0"),
+    .package = "fishprior"
   )
   
   expect_message(
@@ -54,7 +58,8 @@ test_that("check_rfishbase_version() messages and returns TRUE when versions dif
 
 test_that("check_rfishbase_version() message contains installed and CRAN versions", {
   local_mocked_bindings(
-    available.packages = function(...) cran_matrix("99.99.0")
+    available.packages = function(...) cran_matrix("99.99.0"),
+    .package = "fishprior"
   )
   
   expect_message(check_rfishbase_version(), "Installed:")
@@ -64,7 +69,8 @@ test_that("check_rfishbase_version() message contains installed and CRAN version
 test_that("check_rfishbase_version() returns TRUE silently when versions match", {
   installed <- as.character(utils::packageVersion("rfishbase"))
   local_mocked_bindings(
-    available.packages = function(...) cran_matrix(installed)
+    available.packages = function(...) cran_matrix(installed),
+    .package = "fishprior"
   )
   
   expect_no_message(result <- check_rfishbase_version())
