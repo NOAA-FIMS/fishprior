@@ -43,3 +43,5 @@ check_rfishbase_version <- function() {
 
   invisible(TRUE)
 }
+
+pkg_is_installed <- function(pkg) requireNamespace(pkg, quietly = TRUE)
