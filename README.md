@@ -24,8 +24,8 @@ pak::pak("NOAA-FIMS/fishprior")
 
 ### Documentation and Examples
 
-The `pkgdown` generated documentation for the package is <https://noaa-fims.github.io/fishprior/>. This includes\
-- [a basic demonstation of the package](https://noaa-fims.github.io/fishprior/articles/demo.html)\
+The `pkgdown` generated documentation for the package is <https://noaa-fims.github.io/fishprior/>. This includes
+- [a basic demonstation of the package](https://noaa-fims.github.io/fishprior/articles/demo.html)
 - [example workflow of a meta-analysis](https://noaa-fims.github.io/fishprior/articles/meta.html)
 
 A simple dataset called `traits_example` is included as data with the package, and is referenced in the first vignette. This includes summarized traits for three species: *Anoplopoma fimbria, Gadus chalcogrammus*, and *Merluccius merluccius*.
