@@ -34,6 +34,7 @@ Imports:
     tidyr
 Suggests:
     knitr,
+    lozen,
     purrr,
     rmarkdown,
     testthat (>= 3.0.0),
@@ -48,3 +49,5 @@ Language: en-US
 LazyData: true
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.3.3
+Remotes:
+    github::ThinkR-open/lozen
