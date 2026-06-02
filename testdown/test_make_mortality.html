@@ -1,0 +1,380 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>Test File 3 test_make_mortality.R | {testdown} report</title>
+  <meta name="description" content="Test File 3 test_make_mortality.R | {testdown} report for package {fishprior}" />
+  <meta name="generator" content="bookdown 0.46 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="Test File 3 test_make_mortality.R | {testdown} report" />
+  <meta property="og:type" content="book" />
+  
+  <meta property="og:description" content="Test File 3 test_make_mortality.R | {testdown} report for package {fishprior}" />
+  
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Test File 3 test_make_mortality.R | {testdown} report" />
+  
+  <meta name="twitter:description" content="Test File 3 test_make_mortality.R | {testdown} report for package {fishprior}" />
+  
+
+
+
+<meta name="date" content="2026-06-02" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="test_make_growth.html"/>
+<link rel="next" href="test_prior.html"/>
+<script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+<link href="libs/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
+<link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
+
+
+
+<style type="text/css">
+  
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+</style>
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<h3>&nbsp;&nbsp;&nbsp;{testdown} report</h3>
+
+<li class="divider"></li>
+<li class="chapter" data-level="" data-path="testdown-report-for-fishprior.html"><a href="testdown-report-for-fishprior.html"><i class="fa fa-check"></i><code>{testdown}</code> report for <code>{fishprior}</code></a></li>
+<li class="part"><span><b>I Results</b></span></li>
+<li class="chapter" data-level="" data-path="global-results-for-package-fishprior.html"><a href="global-results-for-package-fishprior.html"><i class="fa fa-check"></i>Global results for package fishprior</a></li>
+<li class="chapter" data-level="1" data-path="test_fishbase_traits.html"><a href="test_fishbase_traits.html"><i class="fa fa-check"></i><b>1</b> test_fishbase_traits.R</a></li>
+<li class="chapter" data-level="2" data-path="test_make_growth.html"><a href="test_make_growth.html"><i class="fa fa-check"></i><b>2</b> test_make_growth.R</a></li>
+<li class="chapter" data-level="3" data-path="test_make_mortality.html"><a href="test_make_mortality.html"><i class="fa fa-check"></i><b>3</b> test_make_mortality.R</a></li>
+<li class="chapter" data-level="4" data-path="test_prior.html"><a href="test_prior.html"><i class="fa fa-check"></i><b>4</b> test_prior.R</a></li>
+<li class="chapter" data-level="5" data-path="test_summarize_fishbase_traits.html"><a href="test_summarize_fishbase_traits.html"><i class="fa fa-check"></i><b>5</b> test_summarize_fishbase_traits.R</a></li>
+<li class="chapter" data-level="6" data-path="test_translate_trait_names.html"><a href="test_translate_trait_names.html"><i class="fa fa-check"></i><b>6</b> test_translate_trait_names.R</a></li>
+<li class="chapter" data-level="7" data-path="test_utils.html"><a href="test_utils.html"><i class="fa fa-check"></i><b>7</b> test_utils.R</a></li>
+<li class="chapter" data-level="" data-path="aggregated-failures-and-errors.html"><a href="aggregated-failures-and-errors.html"><i class="fa fa-check"></i>Aggregated failures and errors</a></li>
+<li class="chapter" data-level="" data-path="aggregated-warnings.html"><a href="aggregated-warnings.html"><i class="fa fa-check"></i>Aggregated warnings</a></li>
+<li class="chapter" data-level="" data-path="aggregated-skipped.html"><a href="aggregated-skipped.html"><i class="fa fa-check"></i>Aggregated skipped</a></li>
+<li class="part"><span><b>II Appendix</b></span></li>
+<li class="chapter" data-level="" data-path="how-to-read-this-report.html"><a href="how-to-read-this-report.html"><i class="fa fa-check"></i>How to read this report</a></li>
+<li class="divider"></li>
+<li><a href="https://github.com/ThinkR-open/testdown" target="blank">Built with {testdown} and {bookdown}</a></li>
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">{testdown} report</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="test_make_mortality.r" class="section level1 hasAnchor" number="3">
+<h1><span class="header-section-number">Test File 3</span> test_make_mortality.R<a href="test_make_mortality.html#test_make_mortality.r" class="anchor-section" aria-label="Anchor link to header"></a></h1>
+<div id="summary-2" class="section level2 unnumbered hasAnchor">
+<h2>Summary<a href="test_make_mortality.html#summary-2" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<ul>
+<li><p><strong>Number of test(s)</strong> : 15</p></li>
+<li><p><strong>Number of expectation(s)</strong> : 21</p></li>
+<li><p><strong>Number of successful expectation(s)</strong> : 21</p></li>
+<li><p><strong>Number of failed expectation(s)</strong> : 0</p></li>
+<li><p><strong>Number of errored expectation(s)</strong> : 0</p></li>
+<li><p><strong>Number of expectations with warning(s)</strong> : 0</p></li>
+<li><p><strong>Number of validated skip expectation(s)</strong> : 0</p></li>
+<li><p><strong>Number of skipped expectation(s)</strong> : 0</p></li>
+</ul>
+</div>
+<div id="details-2" class="section level2 unnumbered hasAnchor">
+<h2>Details<a href="test_make_mortality.html#details-2" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<table style="width:100%;">
+<colgroup>
+<col width="20%" />
+<col width="3%" />
+<col width="29%" />
+<col width="29%" />
+<col width="8%" />
+<col width="8%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th align="left">Test</th>
+<th align="left">Description</th>
+<th align="left">Expectation</th>
+<th align="left">Result</th>
+<th align="left">Location</th>
+<th align="left">Test_time</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">make_informative_mortality_prior() errors when given a vector</td>
+<td align="left"></td>
+<td align="left">expect_error( make_informative_mortality_prior(c(log(20), log(25))), “must be a single value” )</td>
+<td align="left"><span title="This expectation is successful.">✅ <font color='green'>Success</font></span></td>
+<td align="left">test_make_mortality.R#2</td>
+<td align="left">2026-06-02 20:41:19.485435</td>
+</tr>
+<tr class="even">
+<td align="left">make_informative_mortality_prior() errors for non-numeric input</td>
+<td align="left"></td>
+<td align="left">expect_error( make_informative_mortality_prior(“twenty”), “must be numeric” )</td>
+<td align="left"><span title="This expectation is successful.">✅ <font color='green'>Success</font></span></td>
+<td align="left">test_make_mortality.R#9</td>
+<td align="left">2026-06-02 20:41:19.507507</td>
+</tr>
+<tr class="odd">
+<td align="left">make_informative_mortality_prior() errors for negative log age</td>
+<td align="left"></td>
+<td align="left">expect_error( make_informative_mortality_prior(-0.5), “must be greater than 0” )</td>
+<td align="left"><span title="This expectation is successful.">✅ <font color='green'>Success</font></span></td>
+<td align="left">test_make_mortality.R#17</td>
+<td align="left">2026-06-02 20:41:19.533425</td>
+</tr>
+<tr class="even">
+<td align="left">make_informative_mortality_prior() returns a lognormal prior</td>
+<td align="left"></td>
+<td align="left">expect_s4_class(p, “prior”)</td>
+<td align="left"><span title="This expectation is successful.">✅ <font color='green'>Success</font></span></td>
+<td align="left">test_make_mortality.R#26</td>
+<td align="left">2026-06-02 20:41:19.540371</td>
+</tr>
+<tr class="odd">
+<td align="left">make_informative_mortality_prior() returns a lognormal prior</td>
+<td align="left"></td>
+<td align="left">expect_equal(get_distribution(p), “lognormal”)</td>
+<td align="left"><span title="This expectation is successful.">✅ <font color='green'>Success</font></span></td>
+<td align="left">test_make_mortality.R#27</td>
+<td align="left">2026-06-02 20:41:19.545441</td>
+</tr>
+<tr class="even">
+<td align="left">make_informative_mortality_prior() returns a lognormal prior</td>
+<td align="left"></td>
+<td align="left">expect_equal(get_type(p), “informative”)</td>
+<td align="left"><span title="This expectation is successful.">✅ <font color='green'>Success</font></span></td>
+<td align="left">test_make_mortality.R#28</td>
+<td align="left">2026-06-02 20:41:19.550435</td>
+</tr>
+<tr class="odd">
+<td align="left">make_informative_mortality_prior() uses Hamel-Cope formula</td>
+<td align="left"></td>
+<td align="left">expect_equal(params[[“mean_log”]], expected_mean, tolerance = 1e-10)</td>
+<td align="left"><span title="This expectation is successful.">✅ <font color='green'>Success</font></span></td>
+<td align="left">test_make_mortality.R#39</td>
+<td align="left">2026-06-02 20:41:19.559607</td>
+</tr>
+<tr class="even">
+<td align="left">make_informative_mortality_prior() uses Hamel-Cope formula</td>
+<td align="left"></td>
+<td align="left">expect_equal(params[[“sd_log”]], expected_sd, tolerance = 1e-10)</td>
+<td align="left"><span title="This expectation is successful.">✅ <font color='green'>Success</font></span></td>
+<td align="left">test_make_mortality.R#40</td>
+<td align="left">2026-06-02 20:41:19.564662</td>
+</tr>
+<tr class="odd">
+<td align="left">make_informative_mortality_prior() scales correctly with max age</td>
+<td align="left"></td>
+<td align="left">expect_gt( get_parameters(p_young)[[“mean_log”]], get_parameters(p_old)[[“mean_log”]] )</td>
+<td align="left"><span title="This expectation is successful.">✅ <font color='green'>Success</font></span></td>
+<td align="left">test_make_mortality.R#48</td>
+<td align="left">2026-06-02 20:41:19.571792</td>
+</tr>
+<tr class="even">
+<td align="left">make_diffuse_mortality_prior() errors when given a vector</td>
+<td align="left"></td>
+<td align="left">expect_error( make_diffuse_mortality_prior(c(-1.5, -1.2), 0.3), “must be a single value” )</td>
+<td align="left"><span title="This expectation is successful.">✅ <font color='green'>Success</font></span></td>
+<td align="left">test_make_mortality.R#55</td>
+<td align="left">2026-06-02 20:41:19.594432</td>
+</tr>
+<tr class="odd">
+<td align="left">make_diffuse_mortality_prior() errors for non-numeric input</td>
+<td align="left"></td>
+<td align="left">expect_error( make_diffuse_mortality_prior(“low”, 0.3), “must be numeric” )</td>
+<td align="left"><span title="This expectation is successful.">✅ <font color='green'>Success</font></span></td>
+<td align="left">test_make_mortality.R#62</td>
+<td align="left">2026-06-02 20:41:19.616774</td>
+</tr>
+<tr class="even">
+<td align="left">make_diffuse_mortality_prior() returns a lognormal diffuse prior</td>
+<td align="left"></td>
+<td align="left">expect_s4_class(p, “prior”)</td>
+<td align="left"><span title="This expectation is successful.">✅ <font color='green'>Success</font></span></td>
+<td align="left">test_make_mortality.R#71</td>
+<td align="left">2026-06-02 20:41:19.623697</td>
+</tr>
+<tr class="odd">
+<td align="left">make_diffuse_mortality_prior() returns a lognormal diffuse prior</td>
+<td align="left"></td>
+<td align="left">expect_equal(get_distribution(p), “lognormal”)</td>
+<td align="left"><span title="This expectation is successful.">✅ <font color='green'>Success</font></span></td>
+<td align="left">test_make_mortality.R#72</td>
+<td align="left">2026-06-02 20:41:19.62879</td>
+</tr>
+<tr class="even">
+<td align="left">make_diffuse_mortality_prior() returns a lognormal diffuse prior</td>
+<td align="left"></td>
+<td align="left">expect_equal(get_type(p), “diffuse”)</td>
+<td align="left"><span title="This expectation is successful.">✅ <font color='green'>Success</font></span></td>
+<td align="left">test_make_mortality.R#73</td>
+<td align="left">2026-06-02 20:41:19.633829</td>
+</tr>
+<tr class="odd">
+<td align="left">make_diffuse_mortality_prior() stores supplied parameters</td>
+<td align="left"></td>
+<td align="left">expect_equal(params[[“mean_log”]], -1.5)</td>
+<td align="left"><span title="This expectation is successful.">✅ <font color='green'>Success</font></span></td>
+<td align="left">test_make_mortality.R#80</td>
+<td align="left">2026-06-02 20:41:19.64215</td>
+</tr>
+<tr class="even">
+<td align="left">make_diffuse_mortality_prior() stores supplied parameters</td>
+<td align="left"></td>
+<td align="left">expect_equal(params[[“sd_log”]], 0.3)</td>
+<td align="left"><span title="This expectation is successful.">✅ <font color='green'>Success</font></span></td>
+<td align="left">test_make_mortality.R#81</td>
+<td align="left">2026-06-02 20:41:19.647184</td>
+</tr>
+<tr class="odd">
+<td align="left">make_diffuse_mortality_prior() sets trait to natural mortality</td>
+<td align="left"></td>
+<td align="left">expect_equal(get_trait(p), “natural mortality”)</td>
+<td align="left"><span title="This expectation is successful.">✅ <font color='green'>Success</font></span></td>
+<td align="left">test_make_mortality.R#86</td>
+<td align="left">2026-06-02 20:41:19.655463</td>
+</tr>
+<tr class="even">
+<td align="left">make_mortality_prior() accepts ‘diffuse’ type without error</td>
+<td align="left"></td>
+<td align="left">expect_no_error( make_mortality_prior(data = NULL, type = “diffuse”) )</td>
+<td align="left"><span title="This expectation is successful.">✅ <font color='green'>Success</font></span></td>
+<td align="left">test_make_mortality.R#91</td>
+<td align="left">2026-06-02 20:41:19.662293</td>
+</tr>
+<tr class="odd">
+<td align="left">make_mortality_prior() accepts ‘informative’ type without error</td>
+<td align="left"></td>
+<td align="left">expect_no_error( make_mortality_prior(data = NULL, type = “informative”) )</td>
+<td align="left"><span title="This expectation is successful.">✅ <font color='green'>Success</font></span></td>
+<td align="left">test_make_mortality.R#97</td>
+<td align="left">2026-06-02 20:41:19.680886</td>
+</tr>
+<tr class="even">
+<td align="left">make_mortality_prior() defaults to ‘diffuse’</td>
+<td align="left"></td>
+<td align="left">expect_no_error(make_mortality_prior(data = NULL))</td>
+<td align="left"><span title="This expectation is successful.">✅ <font color='green'>Success</font></span></td>
+<td align="left">test_make_mortality.R#104</td>
+<td align="left">2026-06-02 20:41:19.687531</td>
+</tr>
+<tr class="odd">
+<td align="left">make_mortality_prior() errors on an invalid type</td>
+<td align="left"></td>
+<td align="left">expect_error( make_mortality_prior(data = NULL, type = “uniform”), class = “rlang_error” )</td>
+<td align="left"><span title="This expectation is successful.">✅ <font color='green'>Success</font></span></td>
+<td align="left">test_make_mortality.R#108</td>
+<td align="left">2026-06-02 20:41:19.706355</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="test_make_growth.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="test_prior.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+  "sharing": {
+    "github": false,
+    "facebook": true,
+    "twitter": true,
+    "linkedin": false,
+    "weibo": false,
+    "instapaper": false,
+    "vk": false,
+    "whatsapp": false,
+    "all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+  },
+  "fontsettings": {
+    "theme": "white",
+    "family": "sans",
+    "size": 2
+  },
+  "edit": {
+    "link": null,
+    "text": null
+  },
+  "history": {
+    "link": null,
+    "text": null
+  },
+  "view": {
+    "link": null,
+    "text": null
+  },
+  "download": null,
+  "search": false,
+  "toc": {
+    "collapse": "subsection"
+  }
+});
+});
+</script>
+
+</body>
+
+</html>
