@@ -7,7 +7,9 @@ Authors@R: c(
     person(c("Jennifer", "S."), "Bigman,", role = "aut",
            comment = c(ORCID = "0000-0001-8070-3061")),
     person(c("Eric", "J."), "Ward", role = "aut",
-           comment = c(ORCID = "0000-0002-4359-0296"))
+           comment = c(ORCID = "0000-0002-4359-0296")),
+    person(c("Carl"), "Boettiger", role = "aut",
+           comment = c(ORCID = "0000-0002-1642-628X"))
   )
 Description: This package extracts information the the rfishbase R package
     to inform priors for parameters that are commonly included in
