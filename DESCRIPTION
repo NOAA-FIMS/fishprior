@@ -37,6 +37,7 @@ Suggests:
     lozen,
     purrr,
     rmarkdown,
+    testdown,
     testthat (>= 3.0.0),
     utils
 VignetteBuilder:
