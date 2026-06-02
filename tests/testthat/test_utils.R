@@ -17,25 +17,25 @@ cran_matrix <- function(version) {
   )
 }
 
-#test_that("check_rfishbase_version() messages and returns FALSE when rfishbase absent", {
+# test_that("check_rfishbase_version() messages and returns FALSE when rfishbase absent", {
 #  local_mocked_bindings(
 #    pkg_is_installed = function(...) FALSE,
 #    .package = "fishprior"
 #  )
-#  
+#
 #  expect_message(
 #    result <- check_rfishbase_version(),
 #    "not installed"
 #  )
 #  expect_false(result)
-#})
+# })
 
 test_that("check_rfishbase_version() messages and returns FALSE when CRAN unavailable", {
   local_mocked_bindings(
     available.packages = function(...) stop("no internet connection"),
     .package = "fishprior"
   )
-  
+
   expect_message(
     result <- check_rfishbase_version(),
     "Could not check CRAN version"
@@ -48,7 +48,7 @@ test_that("check_rfishbase_version() messages and returns TRUE when versions dif
     available.packages = function(...) cran_matrix("99.99.0"),
     .package = "fishprior"
   )
-  
+
   expect_message(
     result <- check_rfishbase_version(),
     "out of date"
@@ -61,7 +61,7 @@ test_that("check_rfishbase_version() message contains installed and CRAN version
     available.packages = function(...) cran_matrix("99.99.0"),
     .package = "fishprior"
   )
-  
+
   expect_message(check_rfishbase_version(), "Installed:")
   expect_message(check_rfishbase_version(), "CRAN:")
 })
@@ -72,7 +72,7 @@ test_that("check_rfishbase_version() returns TRUE silently when versions match",
     available.packages = function(...) cran_matrix(installed),
     .package = "fishprior"
   )
-  
+
   expect_no_message(result <- check_rfishbase_version())
   expect_true(result)
 })
