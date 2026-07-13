@@ -3,7 +3,7 @@
   [![Codecov test coverage](https://codecov.io/gh/NOAA-FIMS/fishprior/branch/main/graph/badge.svg)](https://app.codecov.io/gh/NOAA-FIMS/fishprior?branch=main)
   [![Lifecycle: experimental](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://lifecycle.r-lib.org/articles/stages.html#experimental)
   <!-- badges: end -->
-  
+
 ### Overview
 
 The fishprior R package provides a streamlined workflow for constructing Bayesian prior distributions for fish life-history parameters, using FishBase (and `rfishbase`). The package is structured around three steps: data retrieval, trait summarization, and prior construction.
@@ -27,7 +27,7 @@ For users experiencing installation issues using the `remotes` package, the pack
 ### Documentation and Examples
 
 The `pkgdown` generated documentation for the package is <https://noaa-fims.github.io/fishprior/>. This includes
-- [a basic demonstation of the package](https://noaa-fims.github.io/fishprior/articles/demo.html)
+- [a basic demonstration of the package](https://noaa-fims.github.io/fishprior/articles/demo.html)
 - [example workflow of a meta-analysis](https://noaa-fims.github.io/fishprior/articles/meta.html)
 
 A simple dataset called `traits_example` is included as data with the package, and is referenced in the first vignette. This includes summarized traits for three species: *Anoplopoma fimbria, Gadus chalcogrammus*, and *Merluccius merluccius*.
