@@ -8,7 +8,7 @@ Authors@R: c(
            comment = c(ORCID = "0000-0001-8070-3061")),
     person(c("Eric", "J."), "Ward", role = "aut",
            comment = c(ORCID = "0000-0002-4359-0296")),
-    person(c("Carl"), "Boettiger", role = "aut",
+    person("Carl", "Boettiger", role = "aut",
            comment = c(ORCID = "0000-0002-1642-628X"))
   )
 Description: This package extracts information the the rfishbase R package
@@ -42,6 +42,9 @@ Suggests:
     utils
 VignetteBuilder:
     knitr
+Remotes:
+    github::ThinkR-open/lozen,
+    github::ThinkR-open/testdown
 Config/roxygen2/version: 8.0.0
 Config/testthat/edition: 3
 Config/testthat/parallel: false
@@ -50,6 +53,3 @@ Language: en-US
 LazyData: true
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.3.3
-Remotes:
-    github::ThinkR-open/lozen,
-    github::ThinkR-open/testdown
