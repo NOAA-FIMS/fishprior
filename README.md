@@ -19,8 +19,10 @@ The fishprior package constructs priors using a custom S4 class, which stores th
 The `fishprior` package can be installed via `remotes`, `devtools`, `pak`, or similar packages. The general syntax is
 
 ``` r
-pak::pak("NOAA-FIMS/fishprior")
+remotes::install_github(“NOAA-FIMS/fishprior”)
 ```
+
+For users experiencing installation issues using the `remotes` package, the package can also be installed with `pak::pak("NOAA-FIMS/fishprior")`. On Linux installations, the `duckdb` package is required, and based on user feedback we recommend following these [guidelines](https://github.com/duckdb/duckdb-r#installation-from-the-posit-public-package-manager) (this may take an hour to install).
 
 ### Documentation and Examples
 
