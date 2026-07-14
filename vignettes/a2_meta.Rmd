@@ -66,6 +66,8 @@ filtered_traits <- dplyr::filter(
   Number > 0,
   trait %in% c("LengthMax")
 )
+
+filtered_traits$study_id <- seq_len(nrow(filtered_traits))
 ```
 
 ### Variance weighting

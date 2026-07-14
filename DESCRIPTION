@@ -34,17 +34,12 @@ Imports:
     tidyr
 Suggests:
     knitr,
-    lozen,
     purrr,
     rmarkdown,
-    testdown,
     testthat (>= 3.0.0),
     utils
 VignetteBuilder:
     knitr
-Remotes:
-    github::ThinkR-open/lozen,
-    github::ThinkR-open/testdown
 Config/roxygen2/version: 8.0.0
 Config/testthat/edition: 3
 Config/testthat/parallel: false
