@@ -57,18 +57,6 @@
     </li>
   </ul>
 </li>
-<li class="dropdown">
-  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-    Reports
-
-    <span class="caret"></span>
-  </a>
-  <ul class="dropdown-menu" role="menu">
-<li>
-      <a href="testdown/index.html">testdown</a>
-    </li>
-  </ul>
-</li>
       </ul>
 <ul class="nav navbar-nav navbar-right">
 <li>
@@ -103,13 +91,13 @@
 <h3 id="installation-instructions">Installation instructions<a class="anchor" aria-label="anchor" href="#installation-instructions"></a>
 </h3>
 <p>The <code>fishprior</code> package can be installed via <code>remotes</code>, <code>devtools</code>, <code>pak</code>, or similar packages. The general syntax is</p>
-<div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu">pak</span><span class="fu">::</span><span class="fu"><a href="https://pak.r-lib.org/reference/pak.html" class="external-link">pak</a></span><span class="op">(</span><span class="st">"NOAA-FIMS/fishprior"</span><span class="op">)</span></span></code></pre></div>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" tabindex="-1"></a>remotes<span class="sc">::</span><span class="fu">install_github</span>(“NOAA<span class="sc">-</span>FIMS<span class="sc">/</span>fishprior”)</span></code></pre></div>
+<p>For users experiencing installation issues using the <code>remotes</code> package, the package can also be installed with <code>pak::pak("NOAA-FIMS/fishprior")</code>. On Linux installations, the <code>duckdb</code> package is required, and based on user feedback we recommend following these <a href="https://github.com/duckdb/duckdb-r#installation-from-the-posit-public-package-manager" class="external-link">guidelines</a> (this may take an hour to install).</p>
 </div>
 <div class="section level3">
 <h3 id="documentation-and-examples">Documentation and Examples<a class="anchor" aria-label="anchor" href="#documentation-and-examples"></a>
 </h3>
-<p>The <code>pkgdown</code> generated documentation for the package is <a href="https://noaa-fims.github.io/fishprior/" class="external-link uri">https://noaa-fims.github.io/fishprior/</a>. This includes - <a href="https://noaa-fims.github.io/fishprior/articles/demo.html" class="external-link">a basic demonstation of the package</a> - <a href="https://noaa-fims.github.io/fishprior/articles/meta.html" class="external-link">example workflow of a meta-analysis</a></p>
+<p>The <code>pkgdown</code> generated documentation for the package is <a href="https://noaa-fims.github.io/fishprior/" class="external-link uri">https://noaa-fims.github.io/fishprior/</a>. This includes - <a href="https://noaa-fims.github.io/fishprior/articles/demo.html" class="external-link">a basic demonstration of the package</a> - <a href="https://noaa-fims.github.io/fishprior/articles/meta.html" class="external-link">example workflow of a meta-analysis</a></p>
 <p>A simple dataset called <code>traits_example</code> is included as data with the package, and is referenced in the first vignette. This includes summarized traits for three species: <em>Anoplopoma fimbria, Gadus chalcogrammus</em>, and <em>Merluccius merluccius</em>.</p>
 <p>Basic testing of querying <code>rfishbase</code> is included in the ‘tests’ folder.</p>
 </div>
@@ -170,7 +158,7 @@
 
 <div class="pkgdown">
   <p></p>
-<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.2.0.</p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.2.1.</p>
 </div>
 
       </footer>
