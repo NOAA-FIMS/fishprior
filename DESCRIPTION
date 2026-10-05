@@ -26,6 +26,8 @@ Imports:
     cli,
     dplyr,
     ggplot2,
+    glue,
+    grid,
     methods,
     rfishbase,
     rlang,
