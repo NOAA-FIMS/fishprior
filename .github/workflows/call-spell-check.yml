@@ -4,14 +4,12 @@ name: call-spell-check
 on:
   pull_request:
     branches:
-      - dev
       - main
   push:
     branches:
-      - dev
       - main
   workflow_dispatch:
 
 jobs:
-  call-workflow:
-    uses: nmfs-ost/ghactions4r/.github/workflows/spell-check.yml@main
+  cspell:
+    uses: noaa-fims/.github/.github/workflows/cspell.yml@main
