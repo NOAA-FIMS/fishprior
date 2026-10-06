@@ -14,5 +14,7 @@ export(summarize_fishbase_traits)
 export(translate_trait_names)
 exportMethods(get_distribution)
 importFrom(rlang,.data)
-importFrom(utils,available.packages)
-importFrom(utils,packageVersion)
+importFrom(utils,
+  available.packages,
+  packageVersion
+)
