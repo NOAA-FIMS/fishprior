@@ -113,7 +113,7 @@ wrappers for these calls.</p>
 <span><span class="op">)</span></span>
 <span><span class="va">example_base_raw</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/get_fishbase_traits.html">get_fishbase_traits</a></span><span class="op">(</span>spec_names <span class="op">=</span> <span class="va">species_list</span><span class="op">)</span></span>
 <span><span class="va">example_base_raw</span></span></code></pre></div>
-<pre><code><span><span class="co">## <span style="color: #949494;"># A tibble: 1,436 × 22</span></span></span>
+<pre><code><span><span class="co">## <span style="color: #949494;"># A tibble: 1,445 × 22</span></span></span>
 <span><span class="co">##    rfishbase SpecCode Sex     PopGrowthRef DataSourceRef Locality      YearStart</span></span>
 <span><span class="co">##    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>        <span style="color: #949494; font-style: italic;">&lt;int&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>          <span style="color: #949494; font-style: italic;">&lt;int&gt;</span>         <span style="color: #949494; font-style: italic;">&lt;int&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>             <span style="color: #949494; font-style: italic;">&lt;int&gt;</span></span></span>
 <span><span class="co">## <span style="color: #BCBCBC;"> 1</span> popgrowth      512 female           312           733 Oregon             <span style="text-decoration: underline;">1</span>954</span></span>
@@ -126,7 +126,7 @@ wrappers for these calls.</p>
 <span><span class="co">## <span style="color: #BCBCBC;"> 8</span> popgrowth      512 male             312           733 Oregon             <span style="text-decoration: underline;">1</span>954</span></span>
 <span><span class="co">## <span style="color: #BCBCBC;"> 9</span> popgrowth      512 unsexed         <span style="text-decoration: underline;">5</span>760          <span style="text-decoration: underline;">5</span>818 Northeast Pa…      <span style="text-decoration: underline;">1</span>968</span></span>
 <span><span class="co">## <span style="color: #BCBCBC;">10</span> popgrowth      512 unsexed         <span style="text-decoration: underline;">5</span>760          <span style="text-decoration: underline;">5</span>818 Northeast Pa…      <span style="text-decoration: underline;">1</span>968</span></span>
-<span><span class="co">## <span style="color: #949494;"># ℹ 1,426 more rows</span></span></span>
+<span><span class="co">## <span style="color: #949494;"># ℹ 1,435 more rows</span></span></span>
 <span><span class="co">## <span style="color: #949494;"># ℹ 15 more variables: YearEnd &lt;int&gt;, Number &lt;dbl&gt;, Type &lt;chr&gt;, C_Code &lt;chr&gt;,</span></span></span>
 <span><span class="co">## <span style="color: #949494;">#   E_CODE &lt;dbl&gt;, SourceRef &lt;int&gt;, StockCode &lt;dbl&gt;, AgeMatRef &lt;int&gt;,</span></span></span>
 <span><span class="co">## <span style="color: #949494;">#   trait &lt;chr&gt;, value &lt;dbl&gt;, SE &lt;dbl&gt;, SD &lt;dbl&gt;, country &lt;chr&gt;,</span></span></span>
@@ -186,7 +186,7 @@ e.g.,</p>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">cod_traits</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/count.html" class="external-link">count</a></span><span class="op">(</span><span class="va">Locality</span><span class="op">)</span></span></code></pre></div>
-<pre><code><span><span class="co">## <span style="color: #949494;"># A tibble: 193 × 2</span></span></span>
+<pre><code><span><span class="co">## <span style="color: #949494;"># A tibble: 194 × 2</span></span></span>
 <span><span class="co">##    Locality                                     n</span></span>
 <span><span class="co">##    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>                                    <span style="color: #949494; font-style: italic;">&lt;int&gt;</span></span></span>
 <span><span class="co">## <span style="color: #BCBCBC;"> 1</span> Aberdeen Bay, 1969-1970 (INS)                4</span></span>
@@ -199,7 +199,7 @@ e.g.,</p>
 <span><span class="co">## <span style="color: #BCBCBC;"> 8</span> Baltic Sea (SD 25-32), early 1990s           1</span></span>
 <span><span class="co">## <span style="color: #BCBCBC;"> 9</span> Baltic Sea (SD 25-32), late 2000s            1</span></span>
 <span><span class="co">## <span style="color: #BCBCBC;">10</span> Baltic subdiv. 26                            4</span></span>
-<span><span class="co">## <span style="color: #949494;"># ℹ 183 more rows</span></span></span></code></pre>
+<span><span class="co">## <span style="color: #949494;"># ℹ 184 more rows</span></span></span></code></pre>
 <p>Looking at the locality for growth for example, a handful of studies
 are from eastern Canada and the northeastern United States. If we wanted
 to summarize only these studies, we can use some custom filtering.</p>
