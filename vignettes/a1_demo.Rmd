@@ -75,7 +75,7 @@ cod_traits_filtered <- cod_traits |>
 dplyr::count(cod_traits_filtered, trait, Locality)
 ```
 
-And then we can pass our filtered dataframe into `summarize_fishbase_traits()`
+And then we can pass our filtered data frame into `summarize_fishbase_traits()`
 
 ```{r summarize-code-filtered}
 cod_summary_filtered <- summarize_fishbase_traits(cod_traits_filtered)
